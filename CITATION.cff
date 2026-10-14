@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you utilize this empirical dataset, econometric codebase, or methodology in academic research, policy analysis, or valuation benchmarks, please cite it as below."
+title: "NJUDS Computational Spatial Econometrics & Multi-Modal Underwriting Benchmark"
+authors:
+  - family-names: Gonzalez
+    given-names: Dorian Mario
+    email: dorianmariogonzalez@gmail.com
+    affiliation: "New Jersey Underwriting Data Systems (NJUDS) — Computational Econometrics Research Lab"
+abstract: >
+  An open-science computational spatial econometrics framework and multi-modal valuation
+  benchmark designed for legacy urban housing stock. Resolves hedonic Automated Valuation Model
+  (AVM) pricing failures in pre-1940 structures by integrating high-throughput Scatter-Gather
+  computer vision pipelines (eliminating the Vision Token Tax), statutory New Jersey Chapter 123
+  (N.J.S.A. 54:51A-6) assessment equalization corridor modeling, Uniform Construction Code (NJ UCC)
+  permitting friction, and multi-layer GIS environmental hazard intersections.
+version: 1.0.0
+date-released: 2026-10-14
+license: MIT
+repository-code: "https://github.com/emperor-novero/njuds-computational-econometrics"
+url: "https://github.com/emperor-novero/njuds-computational-econometrics"
+keywords:
+  - spatial econometrics
+  - multi-modal computer vision
+  - map-reduce vision
+  - real estate forensics
+  - property tax equalization
+  - chapter 123
+  - new jersey tax court
+  - hedonic pricing breakdown
+  - automated valuation models
+  - urban housing stock
+  - uniform construction code
+  - added assessment
