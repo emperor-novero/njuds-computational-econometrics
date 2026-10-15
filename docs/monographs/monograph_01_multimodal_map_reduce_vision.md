@@ -37,12 +37,12 @@ Monolithic Ingestion Flow:
 [24-30 High-Res Images] ---> [Monolithic Frontier MLLM (e.g., Pro)] ---> [CapEx Schedule]
 Latency: 45 - 65 seconds
 Token Payload: 60,000 - 100,000 vision tokens
-Cost: $0.50 - $1.50 per property
+Cost: \$0.50 - \$1.50 per property
 Reliability: High attention dispersion; missed sub-metering and panel defects
 ```
 
 This monolithic pipeline fails in production due to three distinct constraints:
-- **The Vision Token Tax**: Multi-modal transformers project images into sequences of spatial patches (e.g., $14 \times 14$ or $16 \times 16$ pixels). A single $1024 \times 1024$ image generates approximately 2,048 tokens. An institutional listing gallery of 30 images requires $\approx 61,440$ input tokens solely for visual representation.
+- **The Vision Token Tax**: Multi-modal transformers project images into sequences of spatial patches (e.g., $`14 \times 14`$ or $`16 \times 16`$ pixels). A single $1024 \times 1024$ image generates approximately 2,048 tokens. An institutional listing gallery of 30 images requires $`\approx 61,440`$ input tokens solely for visual representation.
 - **Attention Dilution Across Long Visual Contexts**: In a massive visual prompt, transformer self-attention mechanisms exhibit quadratic complexity and spatial dilution. Fine-grained engineering pathologies—such as a cracked cast-iron sewer stack or an unpermitted Romex splice hidden in a basement joist—are frequently lost in the global attention distribution.
 - **Latency and Throughput Bottlenecks**: Processing 60k+ tokens through large-parameter frontier architectures incurs 45 to 65 seconds of processing time, rendering batch municipal underwriting (e.g., scanning 1,000 foreclosures or tax liens daily) operationally and economically unfeasible.
 
@@ -50,22 +50,45 @@ This monolithic pipeline fails in production due to three distinct constraints:
 
 ## 2. Mathematical Formalization of the Vision Token Tax
 
-Let an asset inspection gallery be defined as a set of $N$ high-resolution images:
-$$\mathcal{I} = \{ I_1, I_2, \dots, I_N \}, \quad N \in [20, 36]$$
+Let an asset inspection gallery be defined as a set of $`N`$ high-resolution images:
 
-Each image $I_k \in \mathbb{R}^{H \times W \times C}$ is partitioned by the vision encoder into non-overlapping patches of dimension $P \times P$. The total number of visual tokens $\tau_v(I_k)$ generated per image is:
-$$\tau_v(I_k) = \left\lceil \frac{H_k}{P} \right\rceil \times \left\lceil \frac{W_k}{P} \right\rceil + \tau_{cls}$$
-where $\tau_{cls}$ represents class or framing delimiter tokens. For standard high-resolution multi-modal encoders ($P=14$, $H=W=1024$), $\tau_v(I_k) \approx 2,048$ tokens.
+$$
+\mathcal{I} = \{ I_1, I_2, \dots, I_N \}, \quad N \in [20, 36]
+$$
+
+Each image $`I_k \in \mathbb{R}^{H \times W \times C}`$ is partitioned by the vision encoder into non-overlapping patches of dimension $P \times P$. The total number of visual tokens $`\tau_v(I_k)`$ generated per image is:
+
+$$
+\tau_v(I_k) = \left\lceil \frac{H_k}{P} \right\rceil \times \left\lceil \frac{W_k}{P} \right\rceil + \tau_{\text{cls}}
+$$
+
+where $`\tau_{\text{cls}}`$ represents class or framing delimiter tokens. For standard high-resolution multi-modal encoders ($P=14$, $H=W=1024$), $`\tau_v(I_k) \approx 2,048`$ tokens.
 
 ### 2.1 Monolithic Cost and Latency Formulation
-In a monolithic architecture using a frontier reasoning model $\mathcal{M}_{Pro}$, the total monetary cost $C_{mono}$ and processing latency $L_{mono}$ are expressed as:
-$$C_{mono} = \sum_{k=1}^N \tau_v(I_k) \cdot p_{v, Pro} + \tau_{prompt} \cdot p_{in, Pro} + \tau_{out} \cdot p_{out, Pro}$$
-$$L_{mono} = T_{queue} + \sum_{k=1}^N T_{encode}(I_k) + T_{prefill}\left(\sum_{k=1}^N \tau_v(I_k)\right) + \tau_{out} \cdot T_{decode}$$
 
-Given typical pricing parameters ($p_{v, Pro} \approx \$1.25 \times 10^{-6}$, $p_{out, Pro} \approx \$5.00 \times 10^{-6}$), for $N = 28$:
-$$\mathcal{T}_{visual} = 28 \times 2,048 = 57,344 \text{ tokens}$$
-$$C_{mono} \approx 57,344 \times \$1.25 \times 10^{-6} + 1,200 \times \$5.00 \times 10^{-6} \approx \$0.72 \text{ to } \$1.15 \text{ per asset}$$
-$$L_{mono} \approx 42.0 \text{ to } 58.5 \text{ seconds}$$
+In a monolithic architecture using a frontier reasoning model ($`\mathcal{M}_{\text{Pro}}`$), the total monetary cost ($`C_{\text{mono}}`$) and processing latency ($`L_{\text{mono}}`$) are expressed as:
+
+$$
+C_{\text{mono}} = \sum_{k=1}^N \tau_v(I_k) \cdot p_{v, \text{Pro}} + \tau_{\text{prompt}} \cdot p_{\text{in}, \text{Pro}} + \tau_{\text{out}} \cdot p_{\text{out}, \text{Pro}}
+$$
+
+$$
+L_{\text{mono}} = T_{\text{queue}} + \sum_{k=1}^N T_{\text{encode}}(I_k) + T_{\text{prefill}}\left(\sum_{k=1}^N \tau_v(I_k)\right) + \tau_{\text{out}} \cdot T_{\text{decode}}
+$$
+
+Given typical pricing parameters ($`p_{v, \text{Pro}} \approx 1.25 \times 10^{-6}`$ USD/token, $`p_{\text{out}, \text{Pro}} \approx 5.00 \times 10^{-6}`$ USD/token), for $`N = 28`$:
+
+$$
+\mathcal{T}_{\text{visual}} = 28 \times 2,048 = 57,344 \text{ tokens}
+$$
+
+$$
+C_{\text{mono}} \approx 57,344 \times (1.25 \times 10^{-6}) + 1,200 \times (5.00 \times 10^{-6}) \approx 0.72 \text{ to } 1.15 \text{ USD per asset}
+$$
+
+$$
+L_{\text{mono}} \approx 42.0 \text{ to } 58.5 \text{ seconds}
+$$
 
 This economic and temporal profile prohibits statewide deployment across New Jersey’s 3.14 million parcels.
 
@@ -127,22 +150,25 @@ To overcome the Vision Token Tax, NJUDS introduces a decoupled **Scatter-Gather*
 ```
 
 ### 3.1 The Scatter Phase: High-Throughput Edge Feature Extraction
-In the Scatter tier, $N$ images are ingested concurrently by parallel instances of a lightweight, low-latency vision model ($\mathcal{M}_{Flash}$). 
+In the Scatter tier, $`N`$ images are ingested concurrently by parallel instances of a lightweight, low-latency vision model ($`\mathcal{M}_{\text{Flash}}`$). 
 
 #### Image Pre-processing and Dynamic Compaction
-Prior to dispatch, each image $I_k$ undergoes memory-buffered compression:
+Prior to dispatch, each image $`I_k`$ undergoes memory-buffered compression:
 ```python
 def download_and_optimize_image(url: str, max_dimension: int = 768, quality: int = 70) -> tuple:
     # Compresses raw 4K/1080p imagery into 768px maximum bounding box
     # Reduces network I/O and vision encoder patch slicing overhead
 ```
-This downsampling bounds the visual token footprint to $\tau_v(I_k) \le 768$ tokens without compromising forensic edge detection (such as foundation masonry step-cracks or water line efflorescence).
+This downsampling bounds the visual token footprint to $`\tau_v(I_k) \le 768`$ tokens without compromising forensic edge detection (such as foundation masonry step-cracks or water line efflorescence).
 
 #### Asynchronous Concurrent Dispatch
-Using a thread pool of worker threads $W = 10$, the engine distributes the inspection tasks across independent API channels:
-$$\mathcal{F}_k = \mathcal{M}_{Flash}(I_k, \mathcal{P}_{scatter}), \quad k \in \{1, \dots, N\}$$
+Using a thread pool of worker threads $`W = 10`$, the engine distributes the inspection tasks across independent API channels:
 
-The prompt $\mathcal{P}_{scatter}$ restricts model output strictly to a deterministic JSON schema:
+$$
+\mathcal{F}_k = \mathcal{M}_{\text{Flash}}(I_k, \mathcal{P}_{\text{scatter}}), \quad k \in \{1, \dots, N\}
+$$
+
+The prompt $`\mathcal{P}_{\text{scatter}}`$ restricts model output strictly to a deterministic JSON schema:
 ```json
 {
   "room_type": "Basement",
@@ -159,10 +185,13 @@ The prompt $\mathcal{P}_{scatter}$ restricts model output strictly to a determin
 ```
 
 ### 3.2 The Gather Phase: Semantic Synthesis and UCC Code Reconciliation
-The outputs of the Scatter Phase are compiled into a unified textual pathology dossier $\mathcal{T}_{agg}$:
-$$\mathcal{T}_{agg} = \bigoplus_{k=1}^N \mathcal{F}_k, \quad |\mathcal{T}_{agg}| \approx 1,200 - 1,800 \text{ text tokens}$$
+The outputs of the Scatter Phase are compiled into a unified textual pathology dossier $`\mathcal{T}_{\text{agg}}`$:
 
-Because $\mathcal{T}_{agg}$ is purely textual, it completely bypasses the Vision Token Tax. This compact token stream is then transmitted to the deep-reasoning model $\mathcal{M}_{Pro}$ (Gemini Pro / Argon High).
+$$
+\mathcal{T}_{\text{agg}} = \bigoplus_{k=1}^N \mathcal{F}_k, \quad |\mathcal{T}_{\text{agg}}| \approx 1,200 - 1,800 \text{ text tokens}
+$$
+
+Because $`\mathcal{T}_{\text{agg}}`$ is purely textual, it completely bypasses the Vision Token Tax. This compact token stream is then transmitted to the deep-reasoning model $`\mathcal{M}_{\text{Pro}}`$ (Gemini Pro / Argon High).
 
 The Master Engine executes three non-linear computational reconciliations:
 1. **Deduplication of Cross-Room Mechanical Dependencies**: If Flash Node 3 identifies a boiler in the basement and Flash Node 8 identifies unmetered cast-iron radiators in Unit 2, the Gather model recognizes a singular systemic pathology: *lack of individual utility separation*.
@@ -203,7 +232,9 @@ Under New Jersey administrative law, real estate rehabilitation is strictly gove
 
 ### 4.1 The 50% Reconstruction Rule (N.J.A.C. 5:23-6.5)
 Under the Rehabilitation Subcode, if the total expenditure or physical area involved in an alteration exceeds 50% of the aggregate building value or floor area, the entire structure must be brought into compliance with the subcodes for new construction:
-$$\text{If } \frac{\sum \text{Area}_{rehab}}{\text{Area}_{total}} > 0.50 \implies \text{Full Structural & Fire Separation Retrofit Required}$$
+$$
+\text{If } \frac{\sum \text{Area}_{\text{rehab}}}{\text{Area}_{\text{total}}} > 0.50 \implies \text{Full Structural \& Fire Separation Retrofit Required}
+$$
 
 In pre-1940 wood-frame structures, this triggers mandatory installation of 1-hour fire-rated gypsum board separations between dwelling units (Type V-B construction), fire dampers at duct penetrations, and hardwired interconnected smoke and carbon monoxide detection systems with battery backup.
 
@@ -211,7 +242,9 @@ In pre-1940 wood-frame structures, this triggers mandatory installation of 1-hou
 In legacy multi-family structures (e.g., 3-family flats), property owners cannot legally pass heating and hot water utility expenses to tenants without individual metering verified by the Board of Public Utilities (BPU).
 - **Plumbing Subcode (N.J.A.C. 5:23-3.15 / National Standard Plumbing Code)**: Requires independent domestic water distribution manifolds, dedicated water heaters, and separate gas lines.
 - **Electrical Subcode (N.J.A.C. 5:23-3.16 / NFPA 70 National Electrical Code)**: Requires decommissioning old 60A/100A main services. For a 3-family dwelling, the UCC mandates:
-  $$S_{total} \ge 3 \times S_{unit} (100\text{A}) + S_{house} (60\text{A}) = 360\text{A} \implies \text{Standard 400A Service Gang Meter Box}$$
+  $$
+S_{\text{total}} \ge 3 \times S_{\text{unit}} (100\text{A}) + S_{\text{house}} (60\text{A}) = 360\text{A} \implies \text{Standard 400A Service Gang Meter Box}
+$$
 
 The Gather Engine programmatically maps detected visual markers (e.g., "radiator valves," "exterior gas meter count = 1") to mandatory line-item construction tasks.
 
@@ -220,25 +253,48 @@ The Gather Engine programmatically maps detected visual markers (e.g., "radiator
 ## 5. Token Economics and Performance Benchmarks
 
 ### 5.1 Mathematical Proof of Latency and Cost Inversion
-Let $T_{scatter}$ denote the latency of the concurrent Scatter Phase across $N$ images with concurrency $W$:
-$$T_{scatter} = \max_{k \in \{1,\dots,N\}} \left( t_{download}(I_k) + t_{infer, Flash}(I_k) \right) + \epsilon_{network}$$
-Because Flash models utilize lightweight transformer architectures, inference time per image is bounded: $t_{infer, Flash} \le 1.8 \text{ seconds}$. With $W=10$ parallel workers and image compression, downloading and running 24 to 28 images executes within:
-$$T_{scatter} \approx 6.5 \text{ to } 7.8 \text{ seconds}$$
 
-The Gather Phase processes only the synthesized text dossier $\mathcal{T}_{agg}$ ($\approx 1,500$ tokens):
-$$T_{gather} = t_{prefill, Pro}(1,500) + t_{decode, Pro}(1,000) \approx 2.2 \text{ to } 2.5 \text{ seconds}$$
+Let $`T_{\text{scatter}}`$ denote the latency of the concurrent Scatter Phase across $N$ images with concurrency $W$:
+
+$$
+T_{\text{scatter}} = \max_{k \in \{1,\dots,N\}} \left( t_{\text{download}}(I_k) + t_{\text{infer, Flash}}(I_k) \right) + \epsilon_{\text{network}}
+$$
+
+Because Flash models utilize lightweight transformer architectures, inference time per image is bounded: $`t_{\text{infer, Flash}} \le 1.8 \text{ seconds}`$. With $W=10$ parallel workers and image compression, downloading and running 24 to 28 images executes within:
+
+$$
+T_{\text{scatter}} \approx 6.5 \text{ to } 7.8 \text{ seconds}
+$$
+
+The Gather Phase processes only the synthesized text dossier $`\mathcal{T}_{\text{agg}}`$ ($`\approx 1,500`$ tokens):
+
+$$
+T_{\text{gather}} = t_{\text{prefill, Pro}}(1,500) + t_{\text{decode, Pro}}(1,000) \approx 2.2 \text{ to } 2.5 \text{ seconds}
+$$
 
 Total system execution latency:
-$$L_{pipeline} = T_{scatter} + T_{gather} \approx 10.00 \text{ seconds}$$
+
+$$
+L_{\text{pipeline}} = T_{\text{scatter}} + T_{\text{gather}} \approx 10.00 \text{ seconds}
+$$
 
 Contrast this with the monolithic architecture:
-$$L_{mono} = \sum_{k=1}^N t_{download}(I_k) + t_{prefill, Pro}(57,344) + t_{decode, Pro}(1,000) \approx 48.6 \text{ seconds}$$
 
-$$\Delta \text{Latency} = \frac{48.6 - 10.0}{48.6} = 79.4\% \text{ reduction}$$
+$$
+L_{\text{mono}} = \sum_{k=1}^N t_{\text{download}}(I_k) + t_{\text{prefill, Pro}}(57,344) + t_{\text{decode, Pro}}(1,000) \approx 48.6 \text{ seconds}
+$$
+
+$$
+\Delta \text{Latency} = \frac{48.6 - 10.0}{48.6} = 79.4\% \text{ reduction}
+$$
 
 ### 5.2 Empirical Cost Inversion
+
 The comparative cost model is formulated as:
-$$C_{pipeline} = \sum_{k=1}^N \left( \tau_{v, Flash}(I_k) \cdot p_{v, Flash} + \tau_{out, Flash} \cdot p_{out, Flash} \right) + \tau_{in, Pro}(\mathcal{T}_{agg}) \cdot p_{in, Pro} + \tau_{out, Pro} \cdot p_{out, Pro}$$
+
+$$
+C_{\text{pipeline}} = \sum_{k=1}^N \left( \tau_{v, \text{Flash}}(I_k) \cdot p_{v, \text{Flash}} + \tau_{\text{out, Flash}} \cdot p_{\text{out, Flash}} \right) + \tau_{\text{in, Pro}}(\mathcal{T}_{\text{agg}}) \cdot p_{\text{in, Pro}} + \tau_{\text{out, Pro}} \cdot p_{\text{out, Pro}}
+$$
 
 Using standard commercial API pricing:
 - Flash Vision Ingestion: \$0.075 per 1,000,000 tokens
@@ -246,15 +302,34 @@ Using standard commercial API pricing:
 - Pro Input (Text): \$1.25 per 1,000,000 tokens
 - Pro Output (Text): \$5.00 per 1,000,000 tokens
 
-For an inspection gallery of $N = 27$ photos:
-$$\text{Flash Input Cost} = 27 \times 768 \times \$0.075 \times 10^{-6} = \$0.00155$$
-$$\text{Flash Output Cost} = 27 \times 80 \times \$0.30 \times 10^{-6} = \$0.00065$$
-$$\text{Pro Gather Input Cost} = 1,500 \times \$1.25 \times 10^{-6} = \$0.00188$$
-$$\text{Pro Gather Output Cost} = 1,200 \times \$5.00 \times 10^{-6} = \$0.00600$$
-$$C_{pipeline} = \$0.00155 + \$0.00065 + \$0.00188 + \$0.00600 = \mathbf{\$0.01008} \approx \mathbf{\$0.01}$$
+For an inspection gallery of $`N = 27`$ photos:
+
+$$
+\text{Flash Input Cost} = 27 \times 768 \times (0.075 \times 10^{-6}) = 0.00155 \text{ USD}
+$$
+
+$$
+\text{Flash Output Cost} = 27 \times 80 \times (0.30 \times 10^{-6}) = 0.00065 \text{ USD}
+$$
+
+$$
+\text{Pro Gather Input Cost} = 1,500 \times (1.25 \times 10^{-6}) = 0.00188 \text{ USD}
+$$
+
+$$
+\text{Pro Gather Output Cost} = 1,200 \times (5.00 \times 10^{-6}) = 0.00600 \text{ USD}
+$$
+
+$$
+C_{\text{pipeline}} = 0.00155 + 0.00065 + 0.00188 + 0.00600 = \mathbf{0.01008 \text{ USD}} \approx \mathbf{\$0.01}
+$$
 
 Monolithic Pro processing of 27 raw images:
-$$C_{mono} = 27 \times 2,048 \times \$1.25 \times 10^{-6} + 1,200 \times \$5.00 \times 10^{-6} = \$0.06912 + \$0.00600 \approx \mathbf{\$0.07512}$$
+
+$$
+C_{\text{mono}} = 27 \times 2,048 \times (1.25 \times 10^{-6}) + 1,200 \times (5.00 \times 10^{-6}) = 0.06912 + 0.00600 \approx \mathbf{0.07512 \text{ USD}}
+$$
+
 When factoring in retry overhead, high-resolution tile bursts, and long-context processing surcharges, monolithic API calls routinely spike to **\$0.45 – \$0.85 per run**.
 
 The Map-Reduce architecture yields an empirical **cost reduction of 86.6% to 98.8%**.
@@ -272,8 +347,8 @@ ASSET DOSSIER: 13-15 MAY STREET, NEWARK, NJ
 - Asset Classification: 3-Family Wood-Frame Victorian Multi-Family
 - Year Built: 1899 (Verified by MOD-IV Tax List; listing claimed "turnkey modern")
 - Physical Envelope: 3 Stories, 10 Bedrooms, 5 Bathrooms, 3,450 sq ft
-- Retail Asking Price: $898,000
-- Broker Claimed Cap Rate: 7.2% ("Cosmetic touch-up: $15,000 - $25,000")
+- Retail Asking Price: \$898,000
+- Broker Claimed Cap Rate: 7.2% ("Cosmetic touch-up: \$15,000 - \$25,000")
 - Ingested Inspection Gallery: 27 Multi-Angle Forensic Photographs
 ========================================================================================
 ```
@@ -299,13 +374,13 @@ Constrained by NJ UCC labor and material cost indexes for North Jersey (Union/Es
 
 | CapEx Category | Scope & Statutory Code Justification | Priority | Estimated Cost |
 |---|---|---|---|
-| **MEP Separation & Infrastructure** | Installation of 3 independent high-efficiency HVAC mini-split systems; removal of steam boiler; installation of 3 tankless water heaters; 400A electrical service upgrade with 4 separate meters (3 tenants + 1 house meter). *N.J.A.C. 5:23-3.16 & 3.15*. | Mandatory / Immediate | **$85,000** |
-| **Structural & Exterior Envelope** | Helical tieback installation and masonry repointing on fieldstone foundation; tear-off replacement of 2 layers of asphalt shingle roof; sistering deflected 2x8 floor joists on floor 2. | Mandatory / Structural | **$65,000** |
-| **Hazard Abatement & Demolition** | Removal of friable pipe insulation (asbestos); lead paint stabilization on interior door casings and trim; demolition of illegal non-conforming basement partitions. *N.J.A.C. 5:23-6.9*. | Mandatory / Health & Safety | **$55,000** |
-| **Unit Finishes & Compliance** | Renovation of 3 kitchens and 5 bathrooms; installation of 5/8" Type X fire-rated drywall ceilings between floors; hardwired interconnected smoke/CO detection. | Substantial Modernization | **$40,000** |
-| **TOTAL BASELINE CAPEX** | **Deterministic Engineering & Statutory Construction Requirement** | **Operational Control** | **$245,000** |
+| **MEP Separation & Infrastructure** | Installation of 3 independent high-efficiency HVAC mini-split systems; removal of steam boiler; installation of 3 tankless water heaters; 400A electrical service upgrade with 4 separate meters (3 tenants + 1 house meter). *N.J.A.C. 5:23-3.16 & 3.15*. | Mandatory / Immediate | **\$85,000** |
+| **Structural & Exterior Envelope** | Helical tieback installation and masonry repointing on fieldstone foundation; tear-off replacement of 2 layers of asphalt shingle roof; sistering deflected 2x8 floor joists on floor 2. | Mandatory / Structural | **\$65,000** |
+| **Hazard Abatement & Demolition** | Removal of friable pipe insulation (asbestos); lead paint stabilization on interior door casings and trim; demolition of illegal non-conforming basement partitions. *N.J.A.C. 5:23-6.9*. | Mandatory / Health & Safety | **\$55,000** |
+| **Unit Finishes & Compliance** | Renovation of 3 kitchens and 5 bathrooms; installation of 5/8" Type X fire-rated drywall ceilings between floors; hardwired interconnected smoke/CO detection. | Substantial Modernization | **\$40,000** |
+| **TOTAL BASELINE CAPEX** | **Deterministic Engineering & Statutory Construction Requirement** | **Operational Control** | **\$245,000** |
 
-*Variance against Broker Narrative*: The broker estimated renovation requirements at \$15,000–\$25,000. The NJUDS deterministic model established a true legal requirement of **\$245,000**—a **$220,000 error** in retail underwriting.
+*Variance against Broker Narrative*: The broker estimated renovation requirements at \$15,000–\$25,000. The NJUDS deterministic model established a true legal requirement of **\$245,000**—a **\$220,000 error** in retail underwriting.
 
 ---
 
@@ -317,7 +392,7 @@ To establish the generalizability of the Map-Reduce vision architecture, we benc
 |---|---|---|---|---|
 | **Mean Ingestion Latency** | 48.4s | 43.1s | 6.2s | **10.00s** |
 | **Mean Cost Per Asset** | \$0.78 | \$0.64 | \$0.004 | **\$0.012** |
-| **Structural Defect Recall ($R$)** | 82.4% | 84.1% | 71.3% | **98.2%** |
+| **Structural Defect Recall ($`R`$)** | 82.4% | 84.1% | 71.3% | **98.2%** |
 | **MEP Entanglement Detection** | 68.0% | 71.5% | 58.0% | **96.8%** |
 | **NJ UCC Code Compliance Alignment** | 74.2% | 72.0% | 41.5% | **99.1%** |
 | **Attention Dispersion / Hallucination Rate** | 18.5% | 15.2% | 22.0% | **< 1.5%** |

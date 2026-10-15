@@ -26,7 +26,7 @@ We conduct a forensic autopsy of commercial PropTech leviathans and formalize a 
 ### 1.1 The Classical Hedonic Price Function
 The modern theory of hedonic pricing treats a heterogeneous housing asset as a bundle of $K$ distinct characteristics:
 $$\mathbf{z} = (z_1, z_2, \dots, z_K)$$
-where $z_1$ represents structural attributes (square footage, room counts), $z_2$ represents neighborhood quality, and $z_3$ represents locational accessibility.
+where $`z_1`$ represents structural attributes (square footage, room counts), $`z_2`$ represents neighborhood quality, and $`z_3`$ represents locational accessibility.
 
 In market equilibrium, the price function $P(\mathbf{z})$ is assumed to be continuous, twice differentiable, and monotonically increasing in desirable characteristics:
 $$P(\mathbf{z}) = \alpha_0 + \sum_{k=1}^K \beta_k z_k + \varepsilon, \quad \beta_k = \frac{\partial P}{\partial z_k} > 0$$
@@ -95,8 +95,10 @@ In multi-family residential structures erected between 1880 and 1935 (the predom
 ### 2.1 The "Unseparated Utilities" Cash-Flow Trap
 When a 3-family property operates on a single central heating plant and a single master gas/water meter, the property owner is legally prohibited under New Jersey administrative regulations from billing tenants for space heating and domestic hot water. 
 
-Let $R_{sched}$ denote gross scheduled rent, and let $U_{heat}$ and $U_{water}$ denote annualized municipal utility costs:
-$$\text{NOI}_{master} = R_{sched} \times (1 - v) - [T_{tax} + I_{ins} + M_{maint} + \mathbf{U_{heat}} + \mathbf{U_{water}}]$$
+Let $`R_{\text{sched}}`$ denote gross scheduled rent, and let $`U_{\text{heat}}`$ and $`U_{\text{water}}`$ denote annualized municipal utility costs:
+$$
+\text{NOI}_{\text{master}} = R_{\text{sched}} \times (1 - v) - [T_{\text{tax}} + I_{\text{ins}} + M_{\text{maint}} + \mathbf{U}_{\text{heat}} + \mathbf{U}_{\text{water}}]
+$$
 
 In North Jersey winters, heating a drafty, uninsulated 3-family Victorian with a single low-pressure steam boiler costs between **\$6,500 and \$10,500 annually**. 
 
@@ -107,9 +109,11 @@ To pass utility costs to tenants, the investor must execute a complete **MEP Sep
 4. Trenching the basement floor to install 3 separate water distribution manifolds;
 5. Upgrading the electrical service from 100A master to **400A gang-metered service** (3 tenant 100A panels + 1 60A common area house panel).
 
-#### Empirical Cost Vector ($\mathbf{C}_{MEP}$)
+#### Empirical Cost Vector ($`\mathbf{C}_{\text{MEP}}`$)
 In North Jersey union/prevailing-wage markets, the deterministic cost of complete MEP separation in an occupied or semi-occupied 3-family dwelling is bounded by:
-$$\mathbf{C}_{MEP} = \begin{pmatrix} C_{HVAC\_mini\_splits} \\ C_{Electrical\_400A} \\ C_{Plumbing\_manifold} \\ C_{Gas\_meter\_split} \end{pmatrix} = \begin{pmatrix} \$36,000 - \$45,000 \\ \$22,000 - \$28,000 \\ \$14,000 - \$18,000 \\ \$8,000 - \$12,000 \end{pmatrix} \implies \sum C_{MEP} \approx \mathbf{\$80,000 - \$103,000}$$
+$$
+\mathbf{C}_{\text{MEP}} = \begin{pmatrix} C_{\text{HVAC\_mini\_splits}} \\ C_{\text{Electrical\_400A}} \\ C_{\text{Plumbing\_manifold}} \\ C_{\text{Gas\_meter\_split}} \end{pmatrix} = \begin{pmatrix} 36,000 - 45,000 \text{ USD} \\ 22,000 - 28,000 \text{ USD} \\ 14,000 - 18,000 \text{ USD} \\ 8,000 - 12,000 \text{ USD} \end{pmatrix} \implies \sum C_{\text{MEP}} \approx \mathbf{80,000 - 103,000 \text{ USD}}
+$$
 
 Retail AVMs observe that the building has "3 units" and multiply the rent roll by a standard gross rent multiplier (GRM), completely failing to deduct this \$90,000 physical prerequisite.
 
@@ -119,7 +123,9 @@ Retail AVMs observe that the building has "3 units" and multiply the rent roll b
 
 ### 3.1 The NJ UCC 20-Day Review Clock (N.J.A.C. 5:23-2.15)
 Under the **New Jersey Uniform Construction Code (NJ UCC)**, building permit applications for substantial rehabilitation in multi-family dwellings require prior plan examination:
-$$\text{Statutory Review Period} = 20 \text{ business days} \approx 4 \text{ calendar weeks}$$
+$$
+\text{Statutory Review Period} = 20 \text{ business days} \approx 4 \text{ calendar weeks}
+$$
 
 In municipal building departments facing administrative backlogs (e.g., Newark, Jersey City, Paterson), the permitting timeline follows a multi-stage sequential queue:
 
@@ -136,27 +142,33 @@ Phase 5: Rough Inspections (Plumbing, Electrical, Building, Fire) .... Weeks 15 
 Phase 6: Final Finishes, Final UCC Inspections, CCO Issuance ........ Weeks 19 - 21
 ```
 
-### 3.2 Mathematical Formulation of Holding Decay ($C_{hold}$)
+### 3.2 Mathematical Formulation of Holding Decay ($`C_{\text{hold}}`$)
 During this 21-week (5.25-month) statutory construction window, the property generates zero rental revenue while continuously accruing capital holding charges.
 
 Let:
-- $L$ = Total loan balance (Acquisition debt + Renovation escrow);
-- $i_{bridge}$ = Annualized interest rate on short-term bridge debt (e.g., 11.0%);
-- $P_{orig}$ = Loan origination points (e.g., 2.0 points = $0.02 \times L$);
-- $T_{tax}(t)$ = Property tax accrual rate;
-- $I_{ins}(t)$ = Vacant commercial hazard insurance premium;
-- $U_{util}(t)$ = Base holding utilities (water connection fees, temporary power).
+- $`L`$ = Total loan balance (Acquisition debt + Renovation escrow);
+- $`i_{\text{bridge}}`$ = Annualized interest rate on short-term bridge debt (e.g., 11.0%);
+- $`P_{\text{orig}}`$ = Loan origination points (e.g., 2.0 points = $`0.02 \times L`$);
+- $`T_{\text{tax}}(t)`$ = Property tax accrual rate;
+- $`I_{\text{ins}}(t)`$ = Vacant commercial hazard insurance premium;
+- $`U_{\text{util}}(t)`$ = Base holding utilities (water connection fees, temporary power).
 
-Total Holding Decay $C_{hold}$ over holding period $T$ is:
-$$C_{hold}(T) = P_{orig} \cdot L + \int_0^T \left( i_{bridge} \cdot L(t) + T_{tax}(t) + I_{ins}(t) + U_{util}(t) \right) dt$$
+Total Holding Decay $`C_{\text{hold}}`$ over holding period $`T`$ is:
+
+$$
+C_{\text{hold}}(T) = P_{\text{orig}} \cdot L + \int_0^T \left( i_{\text{bridge}} \cdot L(t) + T_{\text{tax}}(t) + I_{\text{ins}}(t) + U_{\text{util}}(t) \right) dt
+$$
 
 #### Holding Cost Computation for a \$1,000,000 Total Capital Stack
-For a typical North Jersey acquisition ($L = \$982,800$, $T = 6 \text{ months} = 0.5 \text{ years}$):
-- Origination Points: $0.02 \times \$982,800 = \$19,656$
-- Cumulative Interest: $\$982,800 \times 0.11 \times 0.5 = \$54,054$
-- Property Taxes: $\$13,927 \times 0.5 = \$6,964$
-- Vacant Insurance & Utilities: $\$2,500 + \$1,800 = \$4,300$
-$$C_{hold} = \$19,656 + \$54,054 + \$6,964 + \$4,300 = \mathbf{\$84,974}$$
+For a typical North Jersey acquisition ($`L = 982,800\text{ USD}`$, $`T = 6 \text{ months} = 0.5 \text{ years}`$):
+- Origination Points: $`0.02 \times 982,800 = 19,656\text{ USD}`$
+- Cumulative Interest: $`982,800 \times 0.11 \times 0.5 = 54,054\text{ USD}`$
+- Property Taxes: $`13,927 \times 0.5 = 6,964\text{ USD}`$
+- Vacant Insurance & Utilities: $`2,500 + 1,800 = 4,300\text{ USD}`$
+
+$$
+C_{\text{hold}} = 19,656 + 54,054 + 6,964 + 4,300 = \mathbf{84,974 \text{ USD}}
+$$
 
 This near-\$85,000 holding drag represents pure capital leakage. Retail investors who project a "quick 60-day cosmetic flip" suffer catastrophic liquidity depletion when the 21-week UCC cycle runs its course.
 
@@ -165,11 +177,15 @@ This near-\$85,000 holding drag represents pure capital leakage. Retail investor
 ## 4. Negative Leverage & Debt Service Insolvency
 
 ### 4.1 The Fundamental Leverage Equation
-Let $R_0$ denote the overall capitalization rate (return on total assets), let $R_D$ denote the constant annual cost of debt (mortgage constant), and let $D/E$ denote the debt-to-equity ratio. The return on equity ($\text{ROE}$ or Cash-on-Cash Return) is:
+Let $`R_0`$ denote the overall capitalization rate (return on total assets), let $`R_D`$ denote the constant annual cost of debt (mortgage constant), and let $`D/E`$ denote the debt-to-equity ratio. The return on equity ($`\text{ROE}`$ or Cash-on-Cash Return) is:
 
-$$\text{ROE} = R_0 + \left( R_0 - R_D \right) \frac{D}{E}$$
+$$
+\text{ROE} = R_0 + \left( R_0 - R_D \right) \frac{D}{E}
+$$
 
-$$\frac{\partial \text{ROE}}{\partial (D/E)} = R_0 - R_D$$
+$$
+\frac{\partial \text{ROE}}{\partial (D/E)} = R_0 - R_D
+$$
 
 ```
 +----------------------------------------------------------------------------------------------------+
@@ -190,13 +206,23 @@ $$\frac{\partial \text{ROE}}{\partial (D/E)} = R_0 - R_D$$
 ```
 
 ### 4.2 Debt Service Coverage Ratio (DSCR) Failure Threshold
-When $R_0 < R_D$, the Net Operating Income is mathematically incapable of covering contractual debt service:
-$$\text{DSCR} = \frac{\text{NOI}}{\text{Annual Debt Service}} = \frac{R_0 \cdot V_{total}}{R_D \cdot D} = \left( \frac{R_0}{R_D} \right) \frac{1}{\text{LTV}}$$
+When $`R_0 < R_D`$, the Net Operating Income is mathematically incapable of covering contractual debt service:
 
-For an acquisition at $75\%$ Loan-to-Value ($\text{LTV} = 0.75$):
-$$\text{DSCR} = \frac{R_0}{R_D \times 0.75}$$
-If the asset yield $R_0 = 3.74\%$ and the debt constant $R_D = 7.19\%$ (corresponding to a 6.00% 30-year amortizing note):
-$$\text{DSCR} = \frac{0.0374}{0.0719 \times 0.75} = \frac{0.0374}{0.0539} = \mathbf{0.694x} \ll 1.00x$$
+$$
+\text{DSCR} = \frac{\text{NOI}}{\text{Annual Debt Service}} = \frac{R_0 \cdot V_{\text{total}}}{R_D \cdot D} = \left( \frac{R_0}{R_D} \right) \frac{1}{\text{LTV}}
+$$
+
+For an acquisition at 75% Loan-to-Value ($`\text{LTV} = 0.75`$):
+
+$$
+\text{DSCR} = \frac{R_0}{R_D \times 0.75}
+$$
+
+If the asset yield $`R_0 = 3.74\%`$ and the debt constant $`R_D = 7.19\%`$ (corresponding to a 6.00% 30-year amortizing note):
+
+$$
+\text{DSCR} = \frac{0.0374}{0.0719 \times 0.75} = \frac{0.0374}{0.0539} = \mathbf{0.694x} \ll 1.00x
+$$
 
 Under this condition, the property bleeds cash every month, forcing the equity holder to inject continuous capital subsidies merely to avoid foreclosure.
 
@@ -228,9 +254,17 @@ The retail broker projected an 8.5% pro-forma yield by ignoring property taxes, 
 
 The NJUDS Underwriting Engine audited the true cash-flow profile at the \$898,000 ask with 25% down payment (\$224,500 equity, \$673,500 debt @ 6.00%, 30-yr amortization = \$48,456/yr debt service):
 
-$$\text{Gross Scheduled Rent (GSR)} = \$79,200 \quad (\text{As-Is}) \implies \$96,000 \quad (\text{Stabilized Post-Rehab})$$
-$$\text{Economic Vacancy \& Credit Loss (8.0\%)} = -\$6,336 \quad (\text{As-Is}) \implies -\$7,680 \quad (\text{Stabilized})$$
-$$\text{Effective Gross Income (EGI)} = \$72,864 \quad (\text{As-Is}) \implies \$88,320 \quad (\text{Stabilized})$$
+$$
+\text{Gross Scheduled Rent (GSR)} = 79,200 \text{ USD} \quad (\text{As-Is}) \implies 96,000 \text{ USD} \quad (\text{Stabilized Post-Rehab})
+$$
+
+$$
+\text{Economic Vacancy \& Credit Loss (8.0\%)} = -6,336 \text{ USD} \quad (\text{As-Is}) \implies -7,680 \text{ USD} \quad (\text{Stabilized})
+$$
+
+$$
+\text{Effective Gross Income (EGI)} = 72,864 \text{ USD} \quad (\text{As-Is}) \implies 88,320 \text{ USD} \quad (\text{Stabilized})
+$$
 
 #### Operating Expenses (OpEx Breakdown)
 - Certified Property Taxes: \$13,927 (As-Is) $\implies$ \$17,618 (Post-Rehab with Added Assessment)
@@ -240,17 +274,35 @@ $$\text{Effective Gross Income (EGI)} = \$72,864 \quad (\text{As-Is}) \implies \
 - Newark Municipal Water & Sewer (\$120/unit/mo): \$4,320/yr
 - Common Area Electric Meter (House panel): \$750/yr
 - Capital Replacement Reserves (\$500/unit/yr): \$1,500/yr
-$$\text{Total OpEx} = \$35,385 \quad (\text{As-Is}) \implies \$39,074 \quad (\text{Stabilized})$$
+$$
+\text{Total OpEx} = 35,385 \text{ USD} \quad (\text{As-Is}) \implies 39,074 \text{ USD} \quad (\text{Stabilized})
+$$
 
 #### Net Yield & Debt Coverage
-$$\text{NOI}_{stabilized} = \$88,320 - \$39,074 = \mathbf{\$49,246}$$
-$$\text{Total Cost Basis} = \$898,000 \text{ (Purchase)} + \$245,000 \text{ (CapEx)} = \mathbf{\$1,143,000}$$
-$$\text{Stabilized Cap Rate} = \frac{\$49,246}{\$1,143,000} = \mathbf{3.74\%}$$
+$$
+\text{NOI}_{\text{stabilized}} = 88,320 - 39,074 = \mathbf{49,246 \text{ USD}}
+$$
+
+$$
+\text{Total Cost Basis} = 898,000 \text{ (Purchase)} + 245,000 \text{ (CapEx)} = \mathbf{1,143,000 \text{ USD}}
+$$
+
+$$
+\text{Stabilized Cap Rate} = \frac{49,246}{1,143,000} = \mathbf{3.74\%}
+$$
 
 Because the **3.74% stabilized yield is far below the 6.00% debt interest rate**, the deal suffers from severe negative leverage:
-$$\text{Annual Cash Flow} = \$49,246 - \$48,456 = \mathbf{+\$790 / \text{year}} \approx \mathbf{\$65 / \text{month}}$$
-$$\text{Cash-on-Cash Return} = \frac{\$790}{\$224,500 \text{ down} + \$245,000 \text{ CapEx}} = \frac{\$790}{\$469,500} = \mathbf{+0.16\%}$$
-$$\text{DSCR} = \frac{\$49,246}{\$48,456} = \mathbf{1.016x} \quad (\text{Bank Default Threshold} < 1.25x)$$
+$$
+\text{Annual Cash Flow} = 49,246 - 48,456 = \mathbf{+790 \text{ USD / year}} \approx \mathbf{65 \text{ USD / month}}
+$$
+
+$$
+\text{Cash-on-Cash Return} = \frac{790}{224,500 \text{ down} + 245,000 \text{ CapEx}} = \frac{790}{469,500} = \mathbf{+0.16\%}
+$$
+
+$$
+\text{DSCR} = \frac{49,246}{48,456} = \mathbf{1.016x} \quad (\text{Bank Default Threshold} < 1.25x)
+$$
 
 At the asking price, the asset ties up **\$469,500 in liquid investor cash** to generate virtually zero return, while exposing the buyer to total debt default upon a single tenant vacancy.
 
@@ -261,11 +313,18 @@ Under a short-term repositioning model using standard 11.0% bridge financing (2 
 - Financing & Holding Carry: \$56,938
 - Disposition / Broker Commissions (8.0% of ARV): \$66,800
 - Transfer Taxes & Legal: \$17,200
-$$\text{Total Deal Cost} = \$898,000 + \$245,000 + \$56,938 + \$66,800 + \$17,200 = \mathbf{\$1,283,938}$$
+$$
+\text{Total Deal Cost} = 898,000 + 245,000 + 56,938 + 66,800 + 17,200 = \mathbf{1,283,938 \text{ USD}}
+$$
 
 The verified After-Repair Value (ARV) supported by verified comparable sales within a 6-month window is **\$835,000**.
-$$\text{Net Profit / Loss} = \$835,000 - \$1,283,938 = \mathbf{-\$448,938 \text{ Net Loss}}$$
-$$\text{Cash-on-Cash Return} = \mathbf{-172.39\%} \quad (\text{Total Equity Evaporation})$$
+$$
+\text{Net Profit / Loss} = 835,000 - 1,283,938 = \mathbf{-448,938 \text{ USD Net Loss}}
+$$
+
+$$
+\text{Cash-on-Cash Return} = \mathbf{-172.39\%} \quad (\text{Total Equity Evaporation})
+$$
 
 ---
 
@@ -337,15 +396,30 @@ To eliminate human bias and speculative optimism, the NJUDS engine calculates va
 ```
 
 ### 7.1 Mathematical MAO Formulation
-$$\text{MAO}_{flip} = \text{ARV} \times (1 - \text{Margin}_{req}) - \mathbf{C}_{CapEx} - C_{hold} - C_{dispo}$$
-$$\text{MAO}_{hold} = \frac{\text{NOI}_{post}}{R_{target}} - \mathbf{C}_{CapEx}$$
-$$\text{MAO} = \min \left( \text{MAO}_{flip}, \text{MAO}_{hold} \right)$$
 
-Applying Newark market parameters ($\text{ARV} = \$835,000$, $\text{Margin}_{req} = 20.0\%$, $\mathbf{C}_{CapEx} = \$245,000$, $C_{hold} = \$56,938$, $C_{dispo} = \$45,000$):
-$$\text{MAO}_{flip} = \$835,000 \times 0.80 - \$245,000 - \$56,938 - \$45,000 = \$668,000 - \$346,938 = \mathbf{\$321,062}$$
+$$
+\text{MAO}_{\text{flip}} = \text{ARV} \times (1 - \text{Margin}_{\text{req}}) - \mathbf{C}_{\text{CapEx}} - C_{\text{hold}} - C_{\text{dispo}}
+$$
 
-For buy-and-hold at an 8.0% required un-levered yield ($R_{target} = 0.08$):
-$$\text{MAO}_{hold} = \frac{\$49,246}{0.08} - \$245,000 = \$615,575 - \$245,000 = \mathbf{\$370,575}$$
+$$
+\text{MAO}_{\text{hold}} = \frac{\text{NOI}_{\text{post}}}{R_{\text{target}}} - \mathbf{C}_{\text{CapEx}}
+$$
+
+$$
+\text{MAO} = \min \left( \text{MAO}_{\text{flip}}, \text{MAO}_{\text{hold}} \right)
+$$
+
+Applying Newark market parameters ($`\text{ARV} = 835,000\text{ USD}`$, $`\text{Margin}_{\text{req}} = 20.0\%`$, $`\mathbf{C}_{\text{CapEx}} = 245,000\text{ USD}`$, $`C_{\text{hold}} = 56,938\text{ USD}`$, $`C_{\text{dispo}} = 45,000\text{ USD}`$):
+
+$$
+\text{MAO}_{\text{flip}} = 835,000 \times 0.80 - 245,000 - 56,938 - 45,000 = 668,000 - 346,938 = \mathbf{321,062 \text{ USD}}
+$$
+
+For buy-and-hold at an 8.0% required un-levered yield ($`R_{\text{target}} = 0.08`$):
+
+$$
+\text{MAO}_{\text{hold}} = \frac{49,246}{0.08} - 245,000 = 615,575 - 245,000 = \mathbf{370,575 \text{ USD}}
+$$
 
 Factoring in phased equity recovery, the NJUDS engine established a hard ceiling of **\$425,000**. An acquisition above \$425,000 guarantees capital destruction.
 

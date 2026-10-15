@@ -120,7 +120,7 @@ Our research monographs provide rigorous mathematical formulations, statutory ci
 | # | Monograph Title | Core Topics | Document Link |
 |---|---|---|---|
 | **01** | **Multi-Modal Map-Reduce Scatter-Gather Architectures for Forensic Structural Depreciation** | The "Vision Token Tax", latency reduction (45s to 10s), Flash vs. Pro/Argon two-tier decomposition, NJ UCC constraint logic, Fannie Mae C1–C6 condition metrics. | [monograph_01_multimodal_map_reduce_vision.md](docs/monographs/monograph_01_multimodal_map_reduce_vision.md) |
-| **02** | **Computational Statutory Equalization: Mathematical Modeling of New Jersey Chapter 123 Assessment Corridors** | N.J.S.A. 54:51A-6, common level corridors ($\pm 15\%$), Director's Ratios, assessment regressivity Gini coefficients ($G_{tax}$), municipal added assessment shocks, Module 95 Tax Sniper. | [monograph_02_statutory_tax_equalization_nj_chapter123.md](docs/monographs/monograph_02_statutory_tax_equalization_nj_chapter123.md) |
+| **02** | **Computational Statutory Equalization: Mathematical Modeling of New Jersey Chapter 123 Assessment Corridors** | N.J.S.A. 54:51A-6, common level corridors ($\pm 15\%$), Director's Ratios, assessment regressivity Gini coefficients ($`G_{\text{tax}}`$), municipal added assessment shocks, Module 95 Tax Sniper. | [monograph_02_statutory_tax_equalization_nj_chapter123.md](docs/monographs/monograph_02_statutory_tax_equalization_nj_chapter123.md) |
 | **03** | **Multi-Layer Spatial Econometrics: Geometric Intersections of Environmental and Micro-Locational Hazards** | NOAA geocoding, FEMA NFHL 100/500-yr floodplains, NJDEP Category 1 hydrography (150ft/300ft buffers), Robert Moses infrastructure legacy, NJ Transit rail gravity vs. FBI UCR crime decay. | [monograph_03_spatial_externality_decay_and_gis_layers.md](docs/monographs/monograph_03_spatial_externality_decay_and_gis_layers.md) |
 | **04** | **The Breakdown of Hedonic Pricing Models in Legacy Multi-Family Housing Stock** | Lancaster-Rosen hedonic collapse, shared MEP utility entanglement, mandatory 20-day NJ UCC permit review holding friction, negative leverage traps, backward-induction MAO. | [monograph_04_hedonic_pricing_failure_in_legacy_housing.md](docs/monographs/monograph_04_hedonic_pricing_failure_in_legacy_housing.md) |
 
@@ -129,7 +129,7 @@ Our research monographs provide rigorous mathematical formulations, statutory ci
 ## Core Research Pillars
 
 ### 1. Multi-Modal Map-Reduce Scatter-Gather Vision Pipeline
-Traditional visual assessment models suffer from the **"Vision Token Tax"**—sending high-resolution inspection imagery directly into massive multi-modal foundation models incurs excessive latency and prohibitive operational costs ($0.50–$1.50 per parcel).
+Traditional visual assessment models suffer from the **"Vision Token Tax"**—sending high-resolution inspection imagery directly into massive multi-modal foundation models incurs excessive latency and prohibitive operational costs (\$0.50–\$1.50 per parcel).
 
 ```
 +-----------------------------------------------------------------------------------------+
@@ -166,7 +166,7 @@ Traditional visual assessment models suffer from the **"Vision Token Tax"**—se
                                              v
                          +---------------------------------------+
                          |   Code-Constrained CapEx Schedule     |
-                         |   (True Economic Depreciation: $245k) |
+                         |   (True Economic Depreciation: \$245k) |
                          +---------------------------------------+
 ```
 
@@ -177,18 +177,24 @@ Traditional visual assessment models suffer from the **"Vision Token Tax"**—se
 ---
 
 ### 2. Statutory Equalization & Chapter 123 Ratio Modeling
-Property tax assessments in New Jersey are governed by **Chapter 123 of the Laws of 1973 (N.J.S.A. 54:51A-6)**. The statute establishes an equalization corridor around each municipality's certified Director's Ratio ($R$):
+Property tax assessments in New Jersey are governed by **Chapter 123 of the Laws of 1973 (N.J.S.A. 54:51A-6)**. The statute establishes an equalization corridor around each municipality's certified Director's Ratio ($`R`$):
 
-$$\text{Lower Tolerance Limit} = R \times 0.85$$
+$$
+\text{Lower Tolerance Limit} = R \times 0.85
+$$
 
-$$\text{Upper Tolerance Limit} = R \times 1.15$$
+$$
+\text{Upper Tolerance Limit} = R \times 1.15
+$$
 
-$$\text{Assessment Ratio} = \frac{\text{Assessed Value}}{\text{True Market Value}}$$
+$$
+\text{Assessment Ratio} = \frac{\text{Assessed Value}}{\text{True Market Value}}
+$$
 
 * **Legal Conformance Rule**:
-  * If $\text{Assessment Ratio} > \text{Upper Limit}$, the taxpayer has a statutory right to an assessment reduction to the Director's Ratio ($R$).
-  * If $\text{Lower Limit} \le \text{Assessment Ratio} \le \text{Upper Limit}$, the property is legally **conforming**, and no tax appeal reduction is permitted by law, regardless of nominal tax burden.
-  * If $\text{Assessment Ratio} < \text{Lower Limit}$, the municipality may file a counter-appeal to increase the taxpayer's assessment (*F.M.C. Stores Co. v. Morris Plains*).
+  * If $`\text{Assessment Ratio} > \text{Upper Limit}`$, the taxpayer has a statutory right to an assessment reduction to the Director's Ratio ($`R`$).
+  * If $`\text{Lower Limit} \le \text{Assessment Ratio} \le \text{Upper Limit}`$, the property is legally **conforming**, and no tax appeal reduction is permitted by law, regardless of nominal tax burden.
+  * If $`\text{Assessment Ratio} < \text{Lower Limit}`$, the municipality may file a counter-appeal to increase the taxpayer's assessment (*F.M.C. Stores Co. v. Morris Plains*).
 * **Added Assessment Dynamics**: Capital expenditures triggering municipal building permits cause a mandatory statutory reassessment upon issuance of a Certificate of Occupancy (N.J.S.A. 54:4-63.2), creating an "added assessment shock" that retail investors routinely overlook.
 
 ---
@@ -203,8 +209,8 @@ Valuation models must query physical ground truth beneath the parcel, not merely
 ---
 
 ### 4. Breakdown of Hedonic Pricing Models in Legacy Housing Stock
-Traditional hedonic models assume linear attribute additivity ($\text{Price} = \beta_0 + \sum \beta_i X_i$). In pre-1940 urban multi-family housing, this assumption collapses due to:
-* **Shared MEP Utilities**: Unseparated heating, gas, and plumbing risers demand non-linear lump-sum capital injections ($80k–$120k).
+Traditional hedonic models assume linear attribute additivity ($`\text{Price} = \beta_0 + \sum \beta_i X_i`$). In pre-1940 urban multi-family housing, this assumption collapses due to:
+* **Shared MEP Utilities**: Unseparated heating, gas, and plumbing risers demand non-linear lump-sum capital injections (\$80k–\$120k).
 * **NJ UCC 20-Day Rule Holding Friction**: Mandatory municipal plan examination windows create 6 to 9-month holding timelines that exhaust short-term debt capital.
 * **Negative Leverage Traps**: When cost of debt (7.25%) exceeds stabilized capitalization rate (3.74%), leverage destroys equity.
 
@@ -223,24 +229,24 @@ A comprehensive forensic walkthrough demonstrating how computational spatial eco
 +---------------------------------------------------------------------------------------------------+
 | Metric                        | Retail Listing Claim   | NJUDS Forensic Reality | Fatal Variance  |
 +-------------------------------+------------------------+------------------------+-----------------+
-| Asking Price / Valuation      | $898,000               | $425,000 (True MAO)    | -$473,000 (-53%)|
+| Asking Price / Valuation      | \$898,000              | \$425,000 (True MAO)   | -\$473,000 (-53%)|
 | Construction Vintage          | "Turnkey Modernized"   | 1899 (MOD-IV Record)   | +125 Yrs Aging  |
-| Required Capital Expenditure  | $15,000 - $30,000      | $245,000 (UCC Strict)  | +$215,000 (+716%)|
+| Required Capital Expenditure  | \$15,000 - \$30,000     | \$245,000 (UCC Strict) | +\$215,000 (+716%)|
 | Holding Horizon (Permit Dead) | "Immediate Cash Flow"  | 6 to 9 Months Hold     | NJ UCC 20-Day   |
 | Stabilized Net Cap Rate       | 8.50% (Pro-Forma)      | 3.74% (True Cash Flow) | -476 bps        |
 | Debt Service Coverage (DSCR)  | 1.45x                  | 0.88x (Unfinanceable)  | Default Hazard  |
-| Fix-and-Flip Net Margin       | +$150,000 Profit       | -$508,250 Net Loss     | Total Wipeout   |
+| Fix-and-Flip Net Margin       | +\$150,000 Profit      | -\$508,250 Net Loss    | Total Wipeout   |
 | Chapter 123 Assessment Status | "High Taxes - Appeal"  | Conforming (45.37%)    | No Legal Relief |
 +-------------------------------+------------------------+------------------------+-----------------+
 ```
 
-### Forensic CapEx Breakdown ($245,000 Line Items)
-1. **Structural Leveling & Foundation Remediation**: $52,000.00
-2. **Electrical Service Separation & Rewire (400A Heavy-Up)**: $48,000.00
-3. **Plumbing Submetering & Lead Service Line Abatement**: $42,000.00
-4. **Environmental Abatement (Lead Paint & Asbestos)**: $38,000.00
-5. **Building Envelope & Full Roof Tear-Off**: $35,000.00
-6. **Municipal Engineering, Architecture & 20% Contingency**: $30,000.00
+### Forensic CapEx Breakdown (\$245,000 Line Items)
+1. **Structural Leveling & Foundation Remediation**: \$52,000.00
+2. **Electrical Service Separation & Rewire (400A Heavy-Up)**: \$48,000.00
+3. **Plumbing Submetering & Lead Service Line Abatement**: \$42,000.00
+4. **Environmental Abatement (Lead Paint & Asbestos)**: \$38,000.00
+5. **Building Envelope & Full Roof Tear-Off**: \$35,000.00
+6. **Municipal Engineering, Architecture & 20% Contingency**: \$30,000.00
 
 > [!TIP]
 > **Primary Case Study PDF Artifact**:  
@@ -257,7 +263,7 @@ Each report represents an actual multi-page algorithmic forensic autopsy queryin
 
 | Property Address | Municipality / County | Production Date | Pages | Primary Algorithmic Finding | Production Artifact |
 |---|---|---|---|---|---|
-| **13 May Street** | Newark (Essex) | May 29, 2026 | 10 | Landmark Case Study ($245k CapEx, 0.88 DSCR, 45.37% Conforming Tax) | [📄 View PDF](case_studies/13_may_st_newark/13_May_Street_Newark_Institutional_Report.pdf) |
+| **13 May Street** | Newark (Essex) | May 29, 2026 | 10 | Landmark Case Study (\$245k CapEx, 0.88 DSCR, 45.37% Conforming Tax) | [📄 View PDF](case_studies/13_may_st_newark/13_May_Street_Newark_Institutional_Report.pdf) |
 | **114 Graham Street** | Jersey City (Hudson) | April 20, 2026 | 8 | Structural Settlement & Soil Mechanics Forensic Audit | [📄 View PDF](artifacts/reports/114_Graham_Street_Jersey_City_04_20_2026.pdf) |
 | **169 Walnut Street** | Bloomfield (Essex) | April 24, 2026 | 9 | Transit Gravity vs. Aging Submetering Deficit | [📄 View PDF](artifacts/reports/169_Walnut_Street_Bloomfield_04_24_2026.pdf) |
 | **241 Osborne Terrace** | Newark (Essex) | May 8, 2026 | 9 | Chapter 123 Reassessment Boundary & Asbestos Friction | [📄 View PDF](artifacts/reports/241_Osborne_Ter_Newark_05_08_2026.pdf) |
@@ -303,7 +309,7 @@ The repository releases a structured JSON dataset cataloging 2026 Chapter 123 Di
 The reference package provides clean, type-hinted implementations of our core algorithmic models:
 
 * **[`src/njuds_econometrics/chapter123.py`](src/njuds_econometrics/chapter123.py)**:
-  - `Chapter123Engine.calculate_corridor(directors_ratio)`: Computes statutory $[0.85 \times R, 1.15 \times R]$ corridors.
+  - `Chapter123Engine.calculate_corridor(directors_ratio)`: Computes statutory $`[0.85 \times R, 1.15 \times R]`$ corridors.
   - `Chapter123Engine.evaluate_conformance(assessed_value, true_value, directors_ratio)`: Adjudicates tax appeal eligibility under N.J.S.A. 54:51A-6.
   - `Chapter123Engine.calculate_added_assessment(base_assessment, capex_amount, equalization_ratio)`: Models post-CO tax reassessment shocks.
 * **[`src/njuds_econometrics/underwriting.py`](src/njuds_econometrics/underwriting.py)**:
@@ -352,7 +358,7 @@ With the support of Google Antigravity and the Gemini 4 Argon High ecosystem, ou
 
 1. **Phase 1: Statewide Assessment Disparity & Regressivity Index (3.14M Parcels)**
    * Ingesting 10+ years of New Jersey SR1A verified sales deeds and MOD-IV assessment books across all 564 municipalities.
-   * Computing Gini coefficients of assessment regressivity ($G_{tax}$) and Price-Related Differential (PRD) to quantify whether lower-tier properties carry disproportionate tax burdens compared to luxury properties.
+   * Computing Gini coefficients of assessment regressivity ($`G_{\text{tax}}`$) and Price-Related Differential (PRD) to quantify whether lower-tier properties carry disproportionate tax burdens compared to luxury properties.
 2. **Phase 2: High-Throughput Multi-Modal Structural Depreciation Modeling**
    * Scaling the Scatter-Gather Map-Reduce pipeline across 500,000+ historical MLS and satellite images to establish the first open latent structural depreciation index for aging East Coast urban centers.
 3. **Phase 3: Autonomous Zero-Shot Spatial Underwriting Agents**

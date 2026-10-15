@@ -25,7 +25,7 @@ We actively invite contributions across four primary research domains:
    - Token budget compression minimizing the "Vision Token Tax."
 
 2. **Statutory Equalization & Chapter 123 Modeling (`src/njuds_econometrics/chapter123.py`)**:
-   - Mathematical modeling of N.J.S.A. 54:51A-6 (Chapter 123 tolerance corridors: $0.85 \times R$ to $1.15 \times R$).
+   - Mathematical modeling of N.J.S.A. 54:51A-6 (Chapter 123 tolerance corridors: $`0.85 \times R`$ to $`1.15 \times R`$).
    - Assessment regressivity modeling (Gini coefficients, PRD, PRB across municipal assessment books).
    - Dynamic added assessment calculations triggered by municipal building permits and Certificates of Occupancy (N.J.S.A. 54:4-63.2).
 
@@ -117,7 +117,7 @@ python3 benchmarks/run_newark_case_study.py
 
 ### Adding New Tests
 * Place new tests in `tests/test_<module_name>.py`.
-* Test edge cases, boundary conditions (corridor borders: exactly $0.85 \times R$ and $1.15 \times R$), and invalid inputs (negative values, zero denominators).
+* Test edge cases, boundary conditions (corridor borders: exactly $`0.85 \times R`$ and $`1.15 \times R`$), and invalid inputs (negative values, zero denominators).
 * Document statutory court precedents where applicable (e.g., *Murnick v. Asbury Park*, *Centorino v. Tewksbury Twp.*).
 
 ---

@@ -12,7 +12,7 @@
 
 Property tax assessment in the State of New Jersey is characterized by extreme municipal decentralization, comprising 564 autonomous taxing districts across 21 counties. To reconcile localized assessment drift with the constitutional mandate for uniform taxation (N.J. Const. art. VIII, § 1, par. 1), the New Jersey Legislature enacted **Chapter 123 of the Laws of 1973** (codified at **N.J.S.A. 54:51A-6** and **N.J.S.A. 54:3-22**). Chapter 123 establishes a statutory tolerance corridor bounded at $\pm 15\%$ around each municipality’s equalized Director’s Ratio. 
 
-This monograph provides a rigorous mathematical, econometric, and legal formalization of the Chapter 123 equalization mechanism. We model the property tax appeal remedy as a non-continuous piecewise linear decision boundary, formalize the municipal counter-appeal risk under the precedent of *F.M.C. Stores Co. v. Morris Plains*, and quantify the "added assessment shock" governed by the Added and Omitted Assessment Act (N.J.S.A. 54:4-63.1 et seq.) as constrained by the *Van Decker* constitutional doctrine. Furthermore, we evaluate systemic assessment regressivity across urban New Jersey using the International Association of Assessing Officers (IAAO) metrics—the Coefficient of Dispersion (COD) and Price-Related Differential (PRD)—and formulate an assessment regressivity Gini coefficient ($G_{tax}$). Finally, we document the computational architecture of the NJUDS "Module 95 Tax Sniper," demonstrating how algorithmic statutory modeling prevents multi-million dollar underwriting errors in legacy real estate portfolios.
+This monograph provides a rigorous mathematical, econometric, and legal formalization of the Chapter 123 equalization mechanism. We model the property tax appeal remedy as a non-continuous piecewise linear decision boundary, formalize the municipal counter-appeal risk under the precedent of *F.M.C. Stores Co. v. Morris Plains*, and quantify the "added assessment shock" governed by the Added and Omitted Assessment Act (N.J.S.A. 54:4-63.1 et seq.) as constrained by the *Van Decker* constitutional doctrine. Furthermore, we evaluate systemic assessment regressivity across urban New Jersey using the International Association of Assessing Officers (IAAO) metrics—the Coefficient of Dispersion (COD) and Price-Related Differential (PRD)—and formulate an assessment regressivity Gini coefficient ($`G_{\text{tax}}`$). Finally, we document the computational architecture of the NJUDS "Module 95 Tax Sniper," demonstrating how algorithmic statutory modeling prevents multi-million dollar underwriting errors in legacy real estate portfolios.
 
 ---
 
@@ -34,24 +34,35 @@ To eliminate this barrier, the Legislature established an objective statutory st
 
 ## 2. Mathematical Formalization of the Chapter 123 Corridor
 
-### 2.1 The Director’s Ratio ($R_D$)
-Let a municipality $\mathcal{M}$ have $K$ recorded arms-length sales during the statutory sampling period (governed by the Division of Taxation's two-year unweighted/weighted moving average). For each transaction $i \in \{1, \dots, K\}$, let $A_i$ represent the assessed value and $S_i$ represent the verified consideration (sales price). The Director's Ratio $R_D \in (0, 100]$ is computed as the aggregate weighted sales-to-assessment percentage:
+### 2.1 The Director’s Ratio ($`R_D`$)
+Let a municipality $\mathcal{M}$ have $K$ recorded arms-length sales during the statutory sampling period (governed by the Division of Taxation's two-year unweighted/weighted moving average). For each transaction $`i \in \{1, \dots, K\}`$, let $`A_i`$ represent the assessed value and $`S_i`$ represent the verified consideration (sales price). The Director's Ratio $`R_D \in (0, 100]`$ is computed as the aggregate weighted sales-to-assessment percentage:
 
-$$R_D = \frac{\sum_{i=1}^K A_i}{\sum_{i=1}^K S_i} \times 100\%$$
+$$
+R_D = \frac{\sum_{i=1}^K A_i}{\sum_{i=1}^K S_i} \times 100\%
+$$
 
 ### 2.2 The Statutory Common Level Corridor
 Chapter 123 defines the **Common Level Range** (or tolerance corridor) by establishing an upper and lower boundary of 15% relative to the Director’s Ratio:
 
-$$\text{Lower Limit } (R_L) = R_D \times (1 - 0.15) = 0.85 \cdot R_D$$
-$$\text{Upper Limit } (R_U) = R_D \times (1 + 0.15) = 1.15 \cdot R_D$$
+$$
+\text{Lower Limit } (R_L) = R_D \times (1 - 0.15) = 0.85 \cdot R_D
+$$
+
+$$
+\text{Upper Limit } (R_U) = R_D \times (1 + 0.15) = 1.15 \cdot R_D
+$$
 
 When a municipality undergoes a certified district-wide revaluation or reassessment, the Director’s Ratio is pegged to $100.0\%$, yielding a statutory corridor of:
-$$R_L = 85.00\%, \quad R_U = 115.00\%$$
+$$
+R_L = 85.00\%, \quad R_U = 115.00\%
+$$
 
-### 2.3 The Subject Implied Assessment Ratio ($R_S$)
-Let an individual real estate parcel $j$ have a current certified assessed value $A_0 = A_{land} + A_{improvement}$ and an economically determined True Market Value $V_M$ (derived from purchase consideration, independent MAI appraisal, or econometric valuation). The parcel's **Subject Ratio** $R_S$ is:
+### 2.3 The Subject Implied Assessment Ratio ($`R_S`$)
+Let an individual real estate parcel $`j`$ have a current certified assessed value $`A_0 = A_{\text{land}} + A_{\text{improvement}}`$ and an economically determined True Market Value $`V_M`$ (derived from purchase consideration, independent MAI appraisal, or econometric valuation). The parcel's **Subject Ratio** $`R_S`$ is:
 
-$$R_S = \frac{A_0}{V_M} \times 100\%$$
+$$
+R_S = \frac{A_0}{V_M} \times 100\%
+$$
 
 ```
 +----------------------------------------------------------------------------------------------------+
@@ -82,40 +93,60 @@ $$R_S = \frac{A_0}{V_M} \times 100\%$$
 
 ## 3. The Tristate Legal Decision Surface & Appeal Mechanics
 
-Under N.J.S.A. 54:51A-6(a)-(c), the County Board of Taxation or the New Jersey Tax Court must apply a deterministic piecewise linear function to determine the revised assessment $A^*$:
+Under N.J.S.A. 54:51A-6(a)-(c), the County Board of Taxation or the New Jersey Tax Court must apply a deterministic piecewise linear function to determine the revised assessment $`A^*`$:
 
-### 3.1 Case I: Statutory Over-Assessment ($R_S > R_U$)
+### 3.1 Case I: Statutory Over-Assessment ($`R_S > R_U`$)
 When the subject ratio strictly exceeds the upper corridor limit:
-$$R_S > 1.15 \cdot R_D$$
 
-The assessment is statutorily presumed discriminatory. The tribunal is legally forbidden from adjusting the assessment to 100% of true market value; instead, the assessment **must be revised downward to the Director’s Ratio ($R_D$)**:
+$$
+R_S > 1.15 \cdot R_D
+$$
 
-$$A^* = V_M \times \frac{R_D}{100}$$
+The assessment is statutorily presumed discriminatory. The tribunal is legally forbidden from adjusting the assessment to 100% of true market value; instead, the assessment **must be revised downward to the Director’s Ratio ($`R_D`$)**:
 
-Let $\tau_{eff} = \tau_{gen} / 100$ denote the total general property tax rate of the taxing district. The recurring annual property tax savings $\Delta T$ achieved through judgment is:
+$$
+A^* = V_M \times \frac{R_D}{100}
+$$
 
-$$\Delta T = (A_0 - A^*) \times \tau_{eff} = \left( A_0 - V_M \cdot \frac{R_D}{100} \right) \times \tau_{eff}$$
+Let $`\tau_{\text{eff}} = \tau_{\text{gen}} / 100`$ denote the total general property tax rate of the taxing district. The recurring annual property tax savings $`\Delta T`$ achieved through judgment is:
 
-### 3.2 Case II: Conforming Corridor ($R_L \le R_S \le R_U$)
+$$
+\Delta T = (A_0 - A^*) \times \tau_{\text{eff}} = \left( A_0 - V_M \cdot \frac{R_D}{100} \right) \times \tau_{\text{eff}}
+$$
+
+### 3.2 Case II: Conforming Corridor ($`R_L \le R_S \le R_U`$)
 When the subject ratio falls within the tolerance corridor:
-$$0.85 \cdot R_D \le R_S \le 1.15 \cdot R_D$$
 
-The assessment enjoys a conclusive statutory presumption of correctness. **No tax reduction is permitted under the laws of New Jersey**, even if the taxpayer demonstrates that the property's assessed value exceeds the nominal sales price ($A_0 > V_M$).
+$$
+0.85 \cdot R_D \le R_S \le 1.15 \cdot R_D
+$$
 
-$$\text{If } R_D < 86.95\% \text{ and } V_M < A_0 \le 1.15 \cdot R_D \cdot V_M \implies A^* = A_0, \quad \Delta T = \$0$$
+The assessment enjoys a conclusive statutory presumption of correctness. **No tax reduction is permitted under the laws of New Jersey**, even if the taxpayer demonstrates that the property's assessed value exceeds the nominal sales price ($`A_0 > V_M`$).
 
-This mathematical reality represents the single greatest trap for out-of-state institutional investors. In an aging municipality with an average ratio of $40\%$, a property assessed at $\$45,000$ and purchased for $\$100,000$ has a Subject Ratio of $45\%$. Because $45\% \le 1.15 \times 40\% = 46\%$, the assessment is legally unassailable, and the taxpayer receives zero relief.
+$$
+\text{If } R_D < 86.95\% \text{ and } V_M < A_0 \le 1.15 \cdot R_D \cdot V_M \implies A^* = A_0, \quad \Delta T = 0 \text{ USD}
+$$
 
-### 3.3 Case III: Under-Assessment & Counter-Appeal Risk ($R_S < R_L$)
+This mathematical reality represents the single greatest trap for out-of-state institutional investors. In an aging municipality with an average ratio of 40%, a property assessed at \$45,000 and purchased for \$100,000 has a Subject Ratio of 45%. Because $`45\% \le 1.15 \times 40\% = 46\%`$, the assessment is legally unassailable, and the taxpayer receives zero relief.
+
+### 3.3 Case III: Under-Assessment & Counter-Appeal Risk ($`R_S < R_L`$)
 When the subject ratio falls below the lower corridor limit:
-$$R_S < 0.85 \cdot R_D$$
+
+$$
+R_S < 0.85 \cdot R_D
+$$
 
 Under the governing doctrine established by the Supreme Court of New Jersey in *F.M.C. Stores Co. v. Borough of Morris Plains*, 100 N.J. 418 (1985), if a taxpayer files an appeal on an under-assessed property, the taxing district is legally entitled to file a counterclaim. Upon presentation of market evidence, the court must **increase the assessment up to the common level**:
 
-$$A^* = V_M \times \frac{R_D}{100} > A_0$$
+$$
+A^* = V_M \times \frac{R_D}{100} > A_0
+$$
 
-The adverse annual tax penalty $\Delta T_{adverse}$ imposed on the taxpayer is:
-$$\Delta T_{adverse} = \left( V_M \cdot \frac{R_D}{100} - A_0 \right) \times \tau_{eff}$$
+The adverse annual tax penalty $`\Delta T_{\text{adverse}}`$ imposed on the taxpayer is:
+
+$$
+\Delta T_{\text{adverse}} = \left( V_M \cdot \frac{R_D}{100} - A_0 \right) \times \tau_{\text{eff}}
+$$
 
 Thus, an uninformed tax appeal filing exposes the investor to an immediate, permanent tax increase.
 
@@ -128,9 +159,11 @@ When an investor undertakes capital rehabilitation or structural modernization, 
 
 > *"When any parcel of real property or any addition, enlargement or construction of any building or structure or other improvement... has been completed or substantially completed after October 1 and on or before the following January 1, the assessor shall determine the taxable value of such property as of the first day of the month following completion..."*
 
-The added assessment $\Delta A_{added}$ represents the incremental full-market value of the improvements multiplied by the Director’s Ratio:
+The added assessment $`\Delta A_{\text{added}}`$ represents the incremental full-market value of the improvements multiplied by the Director’s Ratio:
 
-$$\Delta A_{added} = \Delta V_{improvement} \times \frac{R_D}{100}$$
+$$
+\Delta A_{\text{added}} = \Delta V_{\text{improvement}} \times \frac{R_D}{100}
+$$
 
 This added assessment is billed in October (due November 1st) and operates retroactively, creating an unexpected cash drain on stabilized underwriting yields.
 
@@ -158,7 +191,9 @@ To assess the macro-level equity of municipal tax rolls across New Jersey, we ap
 ### 5.1 Coefficient of Dispersion (COD)
 The COD measures the average percentage deviation of individual assessment ratios from the median assessment ratio $\tilde{R}$:
 
-$$\text{COD} = \frac{100}{\tilde{R}} \left( \frac{1}{n} \sum_{i=1}^n |R_i - \tilde{R}| \right)$$
+$$
+\text{COD} = \frac{100}{\tilde{R}} \left( \frac{1}{n} \sum_{i=1}^n |R_i - \tilde{R}| \right)
+$$
 
 Under IAAO standards:
 - Single-family residential: $\text{COD} \le 15.0\%$ indicates uniform assessment.
@@ -168,7 +203,9 @@ Under IAAO standards:
 ### 5.2 Price-Related Differential (PRD)
 The PRD tests for vertical assessment inequity (regressivity vs. progressivity) by dividing the mean ratio by the weighted mean ratio:
 
-$$\text{PRD} = \frac{\bar{R}_{unweighted}}{\bar{R}_{weighted}} = \frac{\frac{1}{n}\sum_{i=1}^n R_i}{\frac{\sum_{i=1}^n A_i}{\sum_{i=1}^n S_i}}$$
+$$
+\text{PRD} = \frac{\bar{R}_{\text{unweighted}}}{\bar{R}_{\text{weighted}}} = \frac{\frac{1}{n}\sum_{i=1}^n R_i}{\frac{\sum_{i=1}^n A_i}{\sum_{i=1}^n S_i}}
+$$
 
 - **Equitable Standard**: $\text{PRD} \in [0.98, 1.03]$.
 - **Regressive Bias ($\text{PRD} > 1.03$)**: Lower-valued properties are assessed at systematically higher ratios than luxury properties.
@@ -176,12 +213,14 @@ $$\text{PRD} = \frac{\bar{R}_{unweighted}}{\bar{R}_{weighted}} = \frac{\frac{1}{
 
 In New Jersey's older industrial cities, empirical PRD measurements routinely range between **1.08 and 1.18**, proving that distressed, low-income multi-family properties bear a statistically significant disproportionate share of the municipal tax burden.
 
-### 5.3 The Assessment Gini Index ($G_{tax}$)
+### 5.3 The Assessment Gini Index ($`G_{\text{tax}}`$)
 We formalize assessment disparity by constructing an Assessment Lorenz Curve $L(p)$, where cumulative parcels ranked by market value are plotted against cumulative assessed tax base:
 
-$$G_{tax} = 1 - 2 \int_0^1 L(p) \, dp$$
+$$
+G_{\text{tax}} = 1 - 2 \int_0^1 L(p) \, dp
+$$
 
-In a perfectly uniform taxing jurisdiction, $G_{tax} = 0$. In New Jersey municipalities with multi-decade revaluation lapses, $G_{tax}$ approaches **0.42**, revealing that the property tax operates as a regressive consumption tax on legacy housing stock.
+In a perfectly uniform taxing jurisdiction, $`G_{\text{tax}} = 0`$. In New Jersey municipalities with multi-decade revaluation lapses, $`G_{\text{tax}}`$ approaches **0.42**, revealing that the property tax operates as a regressive consumption tax on legacy housing stock.
 
 ---
 
@@ -214,34 +253,65 @@ In a perfectly uniform taxing jurisdiction, $G_{tax} = 0$. In New Jersey municip
 In marketing 13–15 May Street, the listing broker asserted: *"Property taxes are high (\$13,927/yr); an incoming investor can appeal to save thousands."*
 
 The NJUDS Module 95 Tax Sniper audited the property against Newark's certified Chapter 123 table:
-1. Current Assessment: $A_0 = \$372,600$
-2. True Market Valuation: $V_M = \$820,800$
+1. Current Assessment: $`A_0 = 372,600 \text{ USD}`$
+2. True Market Valuation: $`V_M = 820,800 \text{ USD}`$
 3. Implied Subject Ratio:
-   $$R_S = \frac{\$372,600}{\$820,800} \times 100\% = 45.39\%$$
+
+$$
+R_S = \frac{372,600}{820,800} \times 100\% = 45.39\%
+$$
+
 4. Newark Statutory Corridor:
-   $$R_D = 40.29\%, \quad R_L = 34.25\%, \quad R_U = 46.33\%$$
+
+$$
+R_D = 40.29\%, \quad R_L = 34.25\%, \quad R_U = 46.33\%
+$$
+
 5. Evaluation:
-   $$34.25\% \le 45.39\% \le 46.33\% \implies R_L \le R_S \le R_U$$
+
+$$
+34.25\% \le 45.39\% \le 46.33\% \implies R_L \le R_S \le R_U
+$$
 
 **Judicial Verdict**: The property is legally **conforming**. Filing a tax appeal yields **\$0.00 in tax relief**.
 
 Furthermore, upon execution of the \$245,000 UCC-mandated rehabilitation, the City of Newark issues an Added Assessment under N.J.S.A. 54:4-63.2:
-$$\Delta A_{added} = \$245,000 \times 40.29\% = \$98,710$$
-$$A_{post} = \$372,600 + \$98,710 = \$471,310$$
-$$T_{post} = \$471,310 \times 0.03738 = \mathbf{\$17,617.57 / \text{year}}$$
+
+$$
+\Delta A_{\text{added}} = 245,000 \times 0.4029 = 98,710 \text{ USD}
+$$
+
+$$
+A_{\text{post}} = 372,600 + 98,710 = 471,310 \text{ USD}
+$$
+
+$$
+T_{\text{post}} = 471,310 \times 0.03738 = \mathbf{17,617.57 \text{ USD / year}}
+$$
+
 The investor suffers an **unprojected \$3,690 annual operating tax shock**, collapsing cash-on-cash yield from pro-forma projections.
 
 ### 6.2 Ridgefield Case Autopsy: 898 Lancaster Road
 Conversely, for 898 Lancaster Road in Ridgefield, Bergen County:
-- Implied Subject Ratio: $R_S = 114.37\%$
-- Ridgefield Upper Limit: $R_U = 1.15 \times 87.20\% = 100.28\%$
-- Since $114.37\% > 100.28\%$, the asset violates the statutory corridor.
+- Implied Subject Ratio: $`R_S = 114.37\%`$
+- Ridgefield Upper Limit: $`R_U = 1.15 \times 87.20\% = 100.28\%`$
+- Since $`114.37\% > 100.28\%`$, the asset violates the statutory corridor.
 
 The NJUDS engine calculated a mandatory reduction:
-$$A^* = \$856,800 \times 0.8720 = \$747,130$$
-$$\Delta A = \$980,000 - \$747,130 = \$232,870$$
-$$\Delta T = \$232,870 \times 0.02485 = \mathbf{\$5,786.82 / \text{year in cash tax savings}}$$
-This recovery saved the acquisition from debt-service failure, raising the Debt Service Coverage Ratio (DSCR) from $0.94\times$ to a bankable $1.21\times$.
+
+$$
+A^* = 856,800 \times 0.8720 = 747,130 \text{ USD}
+$$
+
+$$
+\Delta A = 980,000 - 747,130 = 232,870 \text{ USD}
+$$
+
+$$
+\Delta T = 232,870 \times 0.02485 = \mathbf{5,786.82 \text{ USD / year in cash tax savings}}
+$$
+
+This recovery saved the acquisition from debt-service failure, raising the Debt Service Coverage Ratio (DSCR) from $`0.94\times`$ to a bankable $`1.21\times`$.
 
 ---
 
