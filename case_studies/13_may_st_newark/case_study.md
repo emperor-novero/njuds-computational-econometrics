@@ -7,6 +7,11 @@
 **Date**: October 14, 2026  
 **License**: CC BY 4.0 / MIT  
 
+> [!IMPORTANT]
+> **PRIMARY EMPIRICAL ARTIFACT / PRODUCTION UNDERWRITING DOSSIER**:  
+> Download the original 10-page production underwriting PDF generated on May 29, 2026 by Engine v1.2:  
+> 📄 **[Download 13_May_Street_Newark_Institutional_Report.pdf](./13_May_Street_Newark_Institutional_Report.pdf)** *(10 Pages | Full Financial & Architectural Breakdown)*
+
 ---
 
 ## 1. Executive Verdict & Core Findings

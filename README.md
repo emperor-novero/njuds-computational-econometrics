@@ -88,7 +88,10 @@ njuds-computational-econometrics/
 │   └── run_newark_case_study.py     <- Landmark Newark empirical benchmark autopsy
 ├── case_studies/
 │   └── 13_may_st_newark/
-│       └── case_study.md            <- Complete forensic institutional autopsy report
+│       ├── case_study.md            <- Complete forensic institutional autopsy report
+│       └── 13_May_Street_Newark_Institutional_Report.pdf <- Original 10-page production underwriting PDF (05/29/2026)
+├── artifacts/
+│   └── reports/                     <- Production institutional underwriting PDFs (Feb–May 2026 across 8 NJ municipalities)
 ├── data/
 │   └── sample_director_ratios_2026.json <- 2026 Chapter 123 equalization dataset (23 jurisdictions)
 ├── docs/
@@ -238,6 +241,31 @@ A comprehensive forensic walkthrough demonstrating how computational spatial eco
 4. **Environmental Abatement (Lead Paint & Asbestos)**: $38,000.00
 5. **Building Envelope & Full Roof Tear-Off**: $35,000.00
 6. **Municipal Engineering, Architecture & 20% Contingency**: $30,000.00
+
+> [!TIP]
+> **Primary Case Study PDF Artifact**:  
+> The original 10-page production underwriting PDF generated on May 29, 2026 is published directly in the case study directory:  
+> 📄 **[Download 13_May_Street_Newark_Institutional_Report.pdf](case_studies/13_may_st_newark/13_May_Street_Newark_Institutional_Report.pdf)**
+
+---
+
+## Empirical Ground Truth Artifacts: Production Underwriting PDFs
+
+To provide unforgeable empirical evidence and eliminate reliance on synthetic or simulated outputs, this repository includes genuine, production-generated institutional underwriting reports produced by the NJUDS Engine (v1.2 Hudson) between February and June 2026. 
+
+Each report represents an actual multi-page algorithmic forensic autopsy querying New Jersey municipal MOD-IV records, PAMS-PIN identifiers, Chapter 123 equalization ratios, and multi-modal photographic decay audits:
+
+| Property Address | Municipality / County | Production Date | Pages | Primary Algorithmic Finding | Production Artifact |
+|---|---|---|---|---|---|
+| **13 May Street** | Newark (Essex) | May 29, 2026 | 10 | Landmark Case Study ($245k CapEx, 0.88 DSCR, 45.37% Conforming Tax) | [📄 View PDF](case_studies/13_may_st_newark/13_May_Street_Newark_Institutional_Report.pdf) |
+| **114 Graham Street** | Jersey City (Hudson) | April 20, 2026 | 8 | Structural Settlement & Soil Mechanics Forensic Audit | [📄 View PDF](artifacts/reports/114_Graham_Street_Jersey_City_04_20_2026.pdf) |
+| **169 Walnut Street** | Bloomfield (Essex) | April 24, 2026 | 9 | Transit Gravity vs. Aging Submetering Deficit | [📄 View PDF](artifacts/reports/169_Walnut_Street_Bloomfield_04_24_2026.pdf) |
+| **241 Osborne Terrace** | Newark (Essex) | May 8, 2026 | 9 | Chapter 123 Reassessment Boundary & Asbestos Friction | [📄 View PDF](artifacts/reports/241_Osborne_Ter_Newark_05_08_2026.pdf) |
+| **267 Townsend Street** | New Brunswick (Middlesex) | May 5, 2026 | 10 | Student Housing Multi-Family Utility Separation Audit | [📄 View PDF](artifacts/reports/267_Townsend_Street_New_Brunswick_05_05_2026.pdf) |
+| **385 Washington Street** | Perth Amboy (Middlesex) | May 14, 2026 | 7 | Category 1 Hydrography & Coastal Riparian Zoning Overlay | [📄 View PDF](artifacts/reports/385_Washington_Street_Perth_Amboy_05_14_2026.pdf) |
+| **55 Smith Street** | Perth Amboy (Middlesex) | Feb 24, 2026 | 9 | Commercial Mixed-Use Environmental & MEP Split | [📄 View PDF](artifacts/reports/55_Smith_Street_Perth_Amboy_02_24_2026.pdf) |
+| **71 Lindsley Avenue** | Newark (Essex) | March 2, 2026 | 9 | Foundation Lateral Shear & Roof Deflection Audit | [📄 View PDF](artifacts/reports/71_Lindsley_Avenue_Newark_03_02_2026.pdf) |
+| **157 Westfield Avenue** | Clark (Union) | March 1, 2026 | 8 | Suburban Equalization Corridor Non-Conformance | [📄 View PDF](artifacts/reports/157_Westfield_Avenue_Clark_03_01_2026.pdf) |
 
 ---
 
