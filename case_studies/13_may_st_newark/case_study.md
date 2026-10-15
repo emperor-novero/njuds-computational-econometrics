@@ -3,7 +3,7 @@
 **Subject Property**: 13 May Street, Newark, New Jersey 07104  
 **Tax District**: Essex County (07) — City of Newark (14)  
 **Parcel Identifier**: Block 612, Lot 19 | Property Class: 2 (Residential 1-4 Family)  
-**Author**: Dorian Mario Gonzalez | NJUDS Computational Spatial Econometrics Lab  
+**Author**: Dorian Gonzalez | NJUDS Computational Spatial Econometrics Lab  
 **Date**: October 14, 2026  
 **License**: CC BY 4.0 / MIT  
 

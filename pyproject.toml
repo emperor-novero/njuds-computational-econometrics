@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "Reference implementation of computational spatial econometrics, municipal equalization modeling (Chapter 123), and multi-modal vision token reduction."
 readme = "README.md"
 authors = [
-    { name = "Dorian Mario Gonzalez", email = "dorianmariogonzalez@gmail.com" },
+    { name = "Dorian Gonzalez", email = "dorianmariogonzalez@gmail.com" },
     { name = "NJUDS Computational Econometrics Research Lab" }
 ]
 license = { text = "MIT" }

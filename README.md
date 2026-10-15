@@ -81,7 +81,7 @@ python3 -m unittest discover tests
 njuds-computational-econometrics/
 ├── CITATION.cff                      <- Academic citation metadata (CFF 1.2.0)
 ├── CONTRIBUTING.md                  <- Contribution guidelines & code standards
-├── LICENSE                          <- MIT License (Dorian Mario Gonzalez / NJUDS Lab)
+├── LICENSE                          <- MIT License (Dorian Gonzalez / NJUDS Lab)
 ├── README.md                        <- Master repository documentation & index
 ├── pyproject.toml                   <- PEP 621 package build configuration
 ├── benchmarks/
@@ -329,7 +329,7 @@ With the support of Google Antigravity and the Gemini 4 Argon High ecosystem, ou
 ---
 
 ## Principal Investigator & Contact
-* **Principal Researcher**: Dorian Mario Gonzalez
+* **Principal Researcher**: Dorian Gonzalez
 * **Organization**: New Jersey Underwriting Data Systems (NJUDS) — Computational Econometrics Research Lab
 * **Email**: `dorianmariogonzalez@gmail.com`
 * **Repository**: [https://github.com/emperor-novero/njuds-computational-econometrics](https://github.com/emperor-novero/njuds-computational-econometrics)

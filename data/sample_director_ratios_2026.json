@@ -5,7 +5,7 @@
     "promulgating_agency": "State of New Jersey Department of the Treasury, Division of Taxation",
     "tax_year": 2026,
     "curated_by": "NJUDS Computational Spatial Econometrics Lab",
-    "lead_researcher": "Dorian Mario Gonzalez",
+    "lead_researcher": "Dorian Gonzalez",
     "description": "Catalog of certified Director Ratios (average assessment ratios derived from SR1A real property deed transactions), statutory Chapter 123 appeal corridors (lower limit = R * 0.85, upper limit = R * 1.15), general property tax rates, and computed effective tax rates across key urban and suburban taxing districts.",
     "tolerance_percentage": 15.0,
     "corridor_formula": {
