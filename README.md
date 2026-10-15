@@ -5,7 +5,7 @@
 [![Research: Non-Commercial](https://img.shields.io/badge/Research-Open%20Science-success.svg)](#open-science-mandate)
 [![Domain: Spatial Econometrics](https://img.shields.io/badge/Domain-Spatial%20Econometrics-purple.svg)](#core-research-pillars)
 [![Python: 3.9+](https://img.shields.io/badge/Python-3.9%2B-brightgreen.svg)](pyproject.toml)
-[![Tests: Passing](https://img.shields.io/badge/Tests-22%2F22%20Passing-brightgreen.svg)](tests/)
+[![Tests: Passing](https://img.shields.io/badge/Tests-38%2F38%20Passing-brightgreen.svg)](tests/)
 [![Benchmark: Scatter--Gather](https://img.shields.io/badge/Vision%20Benchmark-10.00s%20%2F%2031.1x%20Reduction-orange.svg)](benchmarks/run_newark_case_study.py)
 [![Case Study: 13 May St](https://img.shields.io/badge/Case%20Study-13%20May%20St%20Newark-red.svg)](case_studies/13_may_st_newark/case_study.md)
 [![Citation: CFF](https://img.shields.io/badge/Cite-CITATION.cff-informational.svg)](CITATION.cff)
@@ -99,15 +99,22 @@ njuds-computational-econometrics/
 │       ├── monograph_01_multimodal_map_reduce_vision.md
 │       ├── monograph_02_statutory_tax_equalization_nj_chapter123.md
 │       ├── monograph_03_spatial_externality_decay_and_gis_layers.md
-│       └── monograph_04_hedonic_pricing_failure_in_legacy_housing.md
+│       ├── monograph_04_hedonic_pricing_failure_in_legacy_housing.md
+│       └── monograph_05_municipal_fiscal_regressivity_pilot_and_rent_control.md
 ├── src/
 │   └── njuds_econometrics/
 │       ├── __init__.py              <- Package exports & versioning
 │       ├── chapter123.py            <- N.J.S.A. 54:51A-6 corridor & added assessment engine
+│       ├── pilot_abatement.py       <- N.J.S.A. 40A:20 PILOT ASC & 40A:21 5-yr abatement engine
+│       ├── regressivity.py          <- IAAO PRD, COD, and G_tax ratio study diagnostics
+│       ├── rent_control.py          <- NJ municipal rent leveling & CPI margin compression
 │       ├── scatter_gather.py        <- Map-Reduce vision token reduction simulator
 │       └── underwriting.py          <- Institutional DSCR, Cap Rate, Flip & MAO engine
 └── tests/
     ├── test_chapter123.py           <- Unit tests for Chapter 123 statutory logic
+    ├── test_pilot_abatement.py      <- Unit tests for PILOT & 5-year phase-in models
+    ├── test_regressivity.py         <- Unit tests for PRD, COD, and tax Gini equity
+    ├── test_rent_control.py         <- Unit tests for municipal rent control limits
     └── test_underwriting.py         <- Unit tests for financial underwriting models
 ```
 
@@ -115,7 +122,7 @@ njuds-computational-econometrics/
 
 ## Academic Monographs (Whitepapers)
 
-Our research monographs provide rigorous mathematical formulations, statutory citations, and empirical evidence across four foundational pillars:
+Our research monographs provide rigorous mathematical formulations, statutory citations, and empirical evidence across five foundational pillars:
 
 | # | Monograph Title | Core Topics | Document Link |
 |---|---|---|---|
@@ -123,6 +130,7 @@ Our research monographs provide rigorous mathematical formulations, statutory ci
 | **02** | **Computational Statutory Equalization: Mathematical Modeling of New Jersey Chapter 123 Assessment Corridors** | N.J.S.A. 54:51A-6, common level corridors ($\pm 15\%$), Director's Ratios, assessment regressivity Gini coefficients ($`G_{\text{tax}}`$), municipal added assessment shocks, Module 95 Tax Sniper. | [monograph_02_statutory_tax_equalization_nj_chapter123.md](docs/monographs/monograph_02_statutory_tax_equalization_nj_chapter123.md) |
 | **03** | **Multi-Layer Spatial Econometrics: Geometric Intersections of Environmental and Micro-Locational Hazards** | NOAA geocoding, FEMA NFHL 100/500-yr floodplains, NJDEP Category 1 hydrography (150ft/300ft buffers), Robert Moses infrastructure legacy, NJ Transit rail gravity vs. FBI UCR crime decay. | [monograph_03_spatial_externality_decay_and_gis_layers.md](docs/monographs/monograph_03_spatial_externality_decay_and_gis_layers.md) |
 | **04** | **The Breakdown of Hedonic Pricing Models in Legacy Multi-Family Housing Stock** | Lancaster-Rosen hedonic collapse, shared MEP utility entanglement, mandatory 20-day NJ UCC permit review holding friction, negative leverage traps, backward-induction MAO. | [monograph_04_hedonic_pricing_failure_in_legacy_housing.md](docs/monographs/monograph_04_hedonic_pricing_failure_in_legacy_housing.md) |
+| **05** | **Fiscal Urban Econometrics: Long-Term Tax Abatements (PILOT), Municipal Rent Control, and Statewide Assessment Regressivity** | N.J.S.A. 40A:20 PILOT ASC formulas, 95/5 municipal-county revenue splits (0% school allocation), Inganamort v. Fort Lee municipal rent caps, CPI stagflationary margin compression, IAAO PRD/COD/G_tax standards. | [monograph_05_municipal_fiscal_regressivity_pilot_and_rent_control.md](docs/monographs/monograph_05_municipal_fiscal_regressivity_pilot_and_rent_control.md) |
 
 ---
 
@@ -213,6 +221,14 @@ Traditional hedonic models assume linear attribute additivity ($`\text{Price} = 
 * **Shared MEP Utilities**: Unseparated heating, gas, and plumbing risers demand non-linear lump-sum capital injections (\$80k–\$120k).
 * **NJ UCC 20-Day Rule Holding Friction**: Mandatory municipal plan examination windows create 6 to 9-month holding timelines that exhaust short-term debt capital.
 * **Negative Leverage Traps**: When cost of debt (7.25%) exceeds stabilized capitalization rate (3.74%), leverage destroys equity.
+
+---
+
+### 5. Municipal Rent Regulation, PILOT Tax Arbitrage & Assessment Regressivity
+Urban New Jersey housing dynamics cannot be understood through unconstrained market models:
+* **Municipal Rent Leveling Ordinances**: Under *Inganamort v. Fort Lee* (1973), municipalities enforce local CPI caps (e.g. Newark Title XIX 5.0% cap, Jersey City Ch. 260 4.0% cap) and 50% substantial rehabilitation exemptions. Operating expense inflation (6–9%) outpacing capped rent increases causes multi-year NOI margin compression.
+* **Long-Term Tax Exemption (PILOT / N.J.S.A. 40A:20)**: Replaces ad valorem taxes with Annual Service Charges (ASC, 10–15% of AGR), creating multi-million dollar equity shields while establishing a 95% municipal / 5% county / 0% school district revenue split.
+* **Assessment Regressivity & Uniformity**: Incorporating IAAO standards to compute Price-Related Differential ($PRD > 1.03$ indicates regressive taxation where lower-value homes carry higher effective ratios) and Coefficient of Dispersion ($COD > 15\%$ indicates horizontal inequity).
 
 ---
 
@@ -312,6 +328,19 @@ The reference package provides clean, type-hinted implementations of our core al
   - `Chapter123Engine.calculate_corridor(directors_ratio)`: Computes statutory $`[0.85 \times R, 1.15 \times R]`$ corridors.
   - `Chapter123Engine.evaluate_conformance(assessed_value, true_value, directors_ratio)`: Adjudicates tax appeal eligibility under N.J.S.A. 54:51A-6.
   - `Chapter123Engine.calculate_added_assessment(base_assessment, capex_amount, equalization_ratio)`: Models post-CO tax reassessment shocks.
+* **[`src/njuds_econometrics/rent_control.py`](src/njuds_econometrics/rent_control.py)**:
+  - `NJRentControlEngine.evaluate_allowable_increase(...)`: Evaluates municipal CPI caps, statutory maximums, and owner-occupancy exclusions (Newark, Jersey City, Hoboken).
+  - `NJRentControlEngine.calculate_capital_improvement_surcharge(...)`: Amortized major CapEx pass-through schedules capped at 15% of base rent.
+  - `NJRentControlEngine.simulate_rent_control_margin_compression(...)`: Multi-year NOI decay simulation under inflation.
+* **[`src/njuds_econometrics/pilot_abatement.py`](src/njuds_econometrics/pilot_abatement.py)**:
+  - `NJPILOTEngine.evaluate_pilot_agreement(...)`: Models N.J.S.A. 40A:20 Annual Service Charges (ASC on AGR or TPC), land tax credits, and the statutory 95/5 municipal-county revenue split.
+  - `NJPILOTEngine.calculate_five_year_abatement_schedule(...)`: N.J.S.A. 40A:21 statutory 0%-20%-40%-60%-80% phase-in tax schedules.
+  - `NJPILOTEngine.calculate_pilot_net_present_value(...)`: Discounted cash flow valuation of long-term abatement tax shields.
+* **[`src/njuds_econometrics/regressivity.py`](src/njuds_econometrics/regressivity.py)**:
+  - `NJRegressivityEngine.calculate_prd(...)`: Price-Related Differential assessing vertical regressivity ($PRD > 1.03$).
+  - `NJRegressivityEngine.calculate_cod(...)`: Coefficient of Dispersion measuring horizontal assessment uniformity ($COD \le 15\%$).
+  - `NJRegressivityEngine.calculate_tax_gini(...)`: Assessment Regressivity Gini coefficient ($G_{\text{tax}}$).
+  - `NJRegressivityEngine.evaluate_ratio_study(...)`: Full IAAO ratio study diagnostics and compliance verdicts.
 * **[`src/njuds_econometrics/underwriting.py`](src/njuds_econometrics/underwriting.py)**:
   - `UnderwritingEngine.calculate_cap_rate(noi, total_cost)`: Capitalization rate calculator.
   - `UnderwritingEngine.calculate_dscr(noi, annual_debt_service)`: Debt Service Coverage Ratio evaluator.
@@ -333,19 +362,19 @@ python3 -m unittest discover tests -v
 ```
 test_added_assessment_standard (test_chapter123.TestChapter123Engine.test_added_assessment_standard) ... ok
 test_calculate_corridor_newark (test_chapter123.TestChapter123Engine.test_calculate_corridor_newark) ... ok
-test_conformance_boundary_lower (test_chapter123.TestChapter123Engine.test_conformance_boundary_lower) ... ok
-test_conformance_boundary_upper (test_chapter123.TestChapter123Engine.test_conformance_boundary_upper) ... ok
-test_conformance_non_conforming_overassessed (test_chapter123.TestChapter123Engine.test_conformance_non_conforming_overassessed) ... ok
-test_conformance_non_conforming_underassessed (test_chapter123.TestChapter123Engine.test_conformance_non_conforming_underassessed) ... ok
-test_newark_case_study_conformance (test_chapter123.TestChapter123Engine.test_newark_case_study_conformance) ... ok
-test_cap_rate_calculation (test_underwriting.TestUnderwritingEngine.test_cap_rate_calculation) ... ok
-test_dscr_calculation (test_underwriting.TestUnderwritingEngine.test_dscr_calculation) ... ok
-test_evaluate_flip_deal_structure (test_underwriting.TestUnderwritingEngine.test_evaluate_flip_deal_structure) ... ok
-test_fix_and_flip_loss_profitable_case (test_underwriting.TestUnderwritingEngine.test_fix_and_flip_loss_profitable_case) ... ok
+test_five_year_abatement_schedule (test_pilot_abatement.TestNJPILOTEngine.test_five_year_abatement_schedule) ... ok
+test_pilot_net_present_value (test_pilot_abatement.TestNJPILOTEngine.test_pilot_net_present_value) ... ok
+test_standard_pilot_vs_conventional_tax (test_pilot_abatement.TestNJPILOTEngine.test_standard_pilot_vs_conventional_tax) ... ok
+test_assessment_gini_coefficient (test_regressivity.TestNJRegressivityEngine.test_assessment_gini_coefficient) ... ok
+test_high_dispersion_horizontal_inequity (test_regressivity.TestNJRegressivityEngine.test_high_dispersion_horizontal_inequity) ... ok
+test_regressive_distribution_detection (test_regressivity.TestNJRegressivityEngine.test_regressive_distribution_detection) ... ok
+test_capital_improvement_surcharge_approval (test_rent_control.TestNJRentControlEngine.test_capital_improvement_surcharge_approval) ... ok
+test_jersey_city_cpi_cap (test_rent_control.TestNJRentControlEngine.test_jersey_city_cpi_cap) ... ok
+test_newark_cpi_above_cap (test_rent_control.TestNJRentControlEngine.test_newark_cpi_above_cap) ... ok
 test_newark_13_may_flip_loss (test_underwriting.TestUnderwritingEngine.test_newark_13_may_flip_loss) ... ok
 test_newark_13_may_mao_strike_price (test_underwriting.TestUnderwritingEngine.test_newark_13_may_mao_strike_price) ... ok
 ...
-Ran 22 tests in 0.001s
+Ran 38 tests in 0.002s
 
 OK
 ```
